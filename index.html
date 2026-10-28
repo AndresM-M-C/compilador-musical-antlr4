@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bazilio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 25px;
+            width: 100%;
+            max-width: 1100px;
+            align-items: stretch;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3182ce;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #2b6cb0;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        pre#salida {
+            margin-top: 20px;
+            background-color: #e94c4c;
+            color: #ffffff;
+            padding: 14px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            min-height: 48px;
+            font-size: 0.85rem;
+        }
+
+        .preview-box {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-top: 15px;
+            outline: none;
+        }
+
+        .placeholder-text {
+            color: #a0aec0;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        @media (max-width: 850px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="container">
+            <h1>Ejecutar Bazilio</h1>
+
+            <div class="form-group">
+                <label for="archivo">Archivo:</label>
+                <input type="text" id="archivo" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="codigo">Notas / Texto simple:</label>
+                <textarea id="codigo" rows="6" placeholder="Ingresa las notaciones (ej. C D E G)"></textarea>
+            </div>
+            
+            <button onclick="ejecutar()">Ejecutar bazilio.py</button>
+            
+            <pre id="salida">Esperando ejecución...</pre>
+        </div>
+
+        <div class="preview-container">
+            <h2>Vista Previa y Audio</h2>
+            <div class="preview-box" id="preview-box">
+                <p class="placeholder-text">Los resultados de la partitura y el reproductor de audio aparecerán aquí tras la ejecución.</p>
+            </div>
+            <audio id="audio-player" class="audio-player" controls style="display: none;"></audio>
+        </div>
+    </div>
+
+    <script>
+        async function ejecutar() {
+            let archivo = document.getElementById('archivo').value;
+            let notas = document.getElementById('codigo').value.trim();
+
+            if (!notas) {
+                document.getElementById('salida').textContent = "Error: Ingresa notas o código válido antes de ejecutar.";
+                return;
+            }
+
+            document.getElementById('salida').textContent = "Selecciona la carpeta de destino en tu explorador...";
+
+            try {
+                let resp = await fetch('/ejecutar', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ archivo: archivo, notas: notas })
+                });
+                let res = await resp.json();
+                document.getElementById('salida').textContent = res.resultado;
+
+                const previewBox = document.getElementById('preview-box');
+                const audioPlayer = document.getElementById('audio-player');
+
+                if (res.ruta_pdf) {
+                    previewBox.innerHTML = `<iframe src="/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}#view=FitH&toolbar=0&navpanes=0" class="pdf-viewer"></iframe>`;
+                } else {
+                    previewBox.innerHTML = `<p class="placeholder-text">No se pudo generar la vista previa de la partitura.</p>`;
+                }
+
+                if (res.ruta_mp3) {
+                    audioPlayer.src = `/archivo?ruta=${encodeURIComponent(res.ruta_mp3)}&t=${Date.now()}`;
+                    audioPlayer.style.display = 'block';
+                } else {
+                    audioPlayer.style.display = 'none';
+                }
+
+            } catch (e) {
+                document.getElementById('salida').textContent = "Error: Inicia 'python3 server.py' en tu terminal.";
+            }
+        }
+    </script>
+</body>
+</html>
