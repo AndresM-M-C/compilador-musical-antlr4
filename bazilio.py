@@ -108,7 +108,7 @@ class Interprete(BazilioVisitor):
     def visitAsignacion(self, ctx):
         valor = self.visit(ctx.expr())
         if isinstance(valor, list):
-            valor = list(valor)           # copia la lista
+            valor = list(valor)            # copia la lista
         self._vars[ctx.VAR().getText()] = valor
 
     def visitLectura(self, ctx):
@@ -287,9 +287,12 @@ def version_lilypond():
     try:
         salida = subprocess.run(
             ["lilypond", "--version"], capture_output=True, text=True).stdout
-        return re.search(r"(\d+\.\d+\.\d+)", salida).group(1)
+        m = re.search(r"(\d+\.\d+\.\d+)", salida)
+        if m:
+            return m.group(1)
     except (OSError, AttributeError):
-        return "2.20.0"
+        pass
+    return "2.24.4"
 
 
 def texto_lilypond(partitura, tempo=120):
@@ -327,10 +330,17 @@ def generar_salida(partitura, base, solo_ly=False, aviso=print):
             return False
         return True
 
+    # Buscamos la ruta correcta del SoundFont en Debian/Ubuntu
+    sf2_candidatos = [
+        "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+        "/usr/share/soundfonts/FluidR3_GM.sf2"
+    ]
+    sf2_path = next((p for p in sf2_candidatos if os.path.exists(p)), sf2_candidatos[0])
+
     pasos = [
         (["lilypond", "-o", base, ruta_ly],
          "el PDF y el MIDI", [".pdf", ".midi"]),
-        (["fluidsynth", "-ni", "-F", base + ".wav", "/usr/share/soundfonts/FluidR3_GM.sf2", base + ".midi"], "el WAV", [".wav"]),
+        (["fluidsynth", "-ni", "-F", base + ".wav", sf2_path, base + ".midi"], "el WAV", [".wav"]),
         (["ffmpeg", "-y", "-loglevel", "error", "-i", base + ".wav",
           "-codec:a", "libmp3lame", "-qscale:a", "2", base + ".mp3"], "el MP3", [".mp3"]),
     ]
