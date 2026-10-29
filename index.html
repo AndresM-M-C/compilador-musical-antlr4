@@ -418,19 +418,19 @@
             progressFill.style.width = '0%';
             
             progressInterval = setInterval(() => {
-                if (percent < 30) {
-                    percent += 5;
-                    progressStatus.textContent = "Parseando sintaxis con ANTLR4...";
-                } else if (percent < 70) {
+                if (percent < 20) {
                     percent += 2;
-                    progressStatus.textContent = "LilyPond generando partitura PDF...";
-                } else if (percent < 95) {
+                    progressStatus.textContent = "Procesando código con ANTLR4...";
+                } else if (percent < 50) {
                     percent += 1;
-                    progressStatus.textContent = "FluidSynth sintetizando audio MP3...";
+                    progressStatus.textContent = "LilyPond generando partitura PDF...";
+                } else if (percent < 90) {
+                    percent += 1;
+                    progressStatus.textContent = "FluidSynth/FFmpeg sintetizando MP3 (esto puede tardar en Render)...";
                 }
                 progressFill.style.width = percent + '%';
                 progressPercent.textContent = percent + '%';
-            }, 600);
+            }, 1000);
         }
 
         function finalizarCarga(exito = true) {
@@ -442,7 +442,7 @@
 
             progressFill.style.width = '100%';
             progressPercent.textContent = '100%';
-            progressStatus.textContent = exito ? "¡Completado!" : "Error en el proceso";
+            progressStatus.textContent = exito ? "¡Completado!" : "Error o Timeout en el proceso";
 
             btn.disabled = false;
             btn.innerHTML = `<i class="fa-solid fa-play"></i> Compilar y Generar`;
@@ -459,7 +459,7 @@
             }
 
             iniciarCarga();
-            salida.textContent = "[Info] Enviando petición al servidor de Render...";
+            salida.textContent = "[Info] Procesando en el servidor de Render, por favor espera...";
 
             try {
                 let resp = await fetch('/ejecutar', {
@@ -467,6 +467,10 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ archivo: archivo, notas: notas })
                 });
+
+                if (!resp.ok) {
+                    throw new Error(`Error en servidor: ${resp.status}`);
+                }
 
                 let res = await resp.json();
                 salida.textContent = res.resultado;
@@ -476,7 +480,6 @@
                 const audioPlayer = document.getElementById('audio-player');
                 const downloadsContainer = document.getElementById('downloads-container');
 
-                // PDF Preview
                 if (res.ruta_pdf) {
                     previewBox.innerHTML = `<iframe src="/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}#view=FitH&toolbar=0&navpanes=0" class="pdf-viewer"></iframe>`;
                     document.getElementById('dl-pdf').href = `/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}`;
@@ -484,13 +487,11 @@
                     previewBox.innerHTML = `<div class="placeholder-text"><i class="fa-solid fa-circle-exclamation"></i><p>No se pudo generar el PDF.</p></div>`;
                 }
 
-                // Audio MP3 Player
                 if (res.ruta_mp3) {
                     audioPlayer.src = `/archivo?ruta=${encodeURIComponent(res.ruta_mp3)}&t=${Date.now()}`;
                     audioWrapper.style.display = 'block';
                     document.getElementById('dl-mp3').href = `/archivo?ruta=${encodeURIComponent(res.ruta_mp3)}`;
                     
-                    // Ruta para descargar MIDI
                     let rutaMidi = res.ruta_mp3.replace('.mp3', '.midi');
                     document.getElementById('dl-midi').href = `/archivo?ruta=${encodeURIComponent(rutaMidi)}`;
                     
@@ -503,7 +504,7 @@
                 finalizarCarga(true);
 
             } catch (e) {
-                salida.textContent = "[Error de Conexión] No se pudo obtener respuesta del servidor en Render.";
+                salida.textContent = "[Error de Conexión / Timeout] El servidor tardó demasiado debido a las limitaciones de Render. Vuelve a intentarlo en un momento.";
                 finalizarCarga(false);
             }
         }
