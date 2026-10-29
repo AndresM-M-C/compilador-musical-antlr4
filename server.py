@@ -68,7 +68,6 @@ class Handler(SimpleHTTPRequestHandler):
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
             
-            # Capturamos la salida de la consola para ver errores si ocurren
             salida_consola = (res.stdout + "\n" + res.stderr).strip()
             
             if os.path.exists(pdf_path) or os.path.exists(mp3_path):
@@ -81,7 +80,12 @@ class Handler(SimpleHTTPRequestHandler):
                 'ruta_mp3': f"/archivo?ruta={urllib.parse.quote(mp3_path)}" if os.path.exists(mp3_path) else None,
                 'ruta_pdf': f"/archivo?ruta={urllib.parse.quote(pdf_path)}" if os.path.exists(pdf_path) else None
             }
-            self.wfile.write(json.dumps(respuesta).encode('utf-8'))
+            
+            try:
+                self.wfile.write(json.dumps(respuesta).encode('utf-8'))
+            except (BrokenPipeError, ConnectionResetError):
+                # El cliente cerró la conexión antes de recibir la respuesta; lo ignoramos de forma segura.
+                pass
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8000))
