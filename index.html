@@ -326,7 +326,7 @@
         <div class="brand">
             <i class="fa-solid fa-music"></i>
             <h1>Bazilio</h1>
-            <span class="badge">Compiler Web v2.0</span>
+            <span class="badge">Generador de Música</span>
         </div>
     </header>
 
@@ -334,27 +334,27 @@
         <!-- Editor Column -->
         <div class="card">
             <div class="card-title">
-                <i class="fa-solid fa-code"></i> Editor de Notación
+                <i class="fa-solid fa-pen-nib"></i> Escribe tu Música
             </div>
 
             <div class="form-group">
-                <label for="archivo">Nombre del Proyecto:</label>
+                <label for="archivo">Título de tu canción:</label>
                 <input type="text" id="archivo" placeholder="ej. MiMelodia">
             </div>
 
             <div class="form-group">
-                <label for="codigo">Notas / Código Bazilio:</label>
-                <textarea id="codigo" placeholder="Ingresa las notaciones (ej. C D E G)"></textarea>
+                <label for="codigo">Notas musicales:</label>
+                <textarea id="codigo" placeholder="Escribe tus notas aquí (ej. C D E G)"></textarea>
             </div>
             
             <button id="btn-ejecutar" class="btn-submit" onclick="ejecutar()">
-                <i class="fa-solid fa-play"></i> Compilar y Generar
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Crear música y partitura
             </button>
 
             <!-- Progress Bar -->
             <div class="progress-container" id="progress-container">
                 <div class="progress-header">
-                    <span id="progress-status">Procesando...</span>
+                    <span id="progress-status">Preparando...</span>
                     <span id="progress-percent">0%</span>
                 </div>
                 <div class="progress-bar-bg">
@@ -363,38 +363,38 @@
             </div>
 
             <!-- Console Log -->
-            <div class="console-box" id="salida">Esperando ejecución...</div>
+            <div class="console-box" id="salida">Listo para crear tu música...</div>
         </div>
 
         <!-- Preview Column -->
         <div class="card">
             <div class="card-title">
-                <i class="fa-solid fa-file-pdf"></i> Vista Previa y Reproducción
+                <i class="fa-solid fa-headphones-simple"></i> Escucha y Visualiza
             </div>
 
             <div class="preview-box" id="preview-box">
                 <div class="placeholder-text">
                     <i class="fa-solid fa-sheet-music"></i>
-                    <p>La partitura en PDF y el reproductor de audio aparecerán aquí tras compilar.</p>
+                    <p>Aquí aparecerá la partitura y el reproductor de audio una vez que crees tu música.</p>
                 </div>
             </div>
 
             <!-- Audio Player -->
             <div class="audio-wrapper" id="audio-wrapper">
-                <label style="margin-bottom: 6px;">Audio Sintetizado (MP3):</label>
+                <label style="margin-bottom: 6px;">Escuchar Canción (MP3):</label>
                 <audio id="audio-player" class="audio-player" controls></audio>
             </div>
 
             <!-- Download Buttons -->
             <div class="downloads-container" id="downloads-container">
                 <a id="dl-pdf" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> PDF
+                    <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Descargar PDF
                 </a>
                 <a id="dl-mp3" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> MP3
+                    <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> Descargar MP3
                 </a>
                 <a id="dl-midi" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-drum" style="color: #f59e0b;"></i> MIDI
+                    <i class="fa-solid fa-drum" style="color: #f59e0b;"></i> Descargar MIDI
                 </a>
             </div>
         </div>
@@ -411,7 +411,7 @@
             const progressPercent = document.getElementById('progress-percent');
 
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Compilando...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Creando magia...`;
             progressContainer.style.display = 'block';
             
             let percent = 0;
@@ -420,13 +420,13 @@
             progressInterval = setInterval(() => {
                 if (percent < 20) {
                     percent += 2;
-                    progressStatus.textContent = "Procesando código con ANTLR4...";
+                    progressStatus.textContent = "Leyendo tus notas musicales...";
                 } else if (percent < 50) {
                     percent += 1;
-                    progressStatus.textContent = "LilyPond generando partitura PDF...";
+                    progressStatus.textContent = "Diseñando tu partitura en PDF...";
                 } else if (percent < 90) {
                     percent += 1;
-                    progressStatus.textContent = "FluidSynth/FFmpeg sintetizando MP3 (esto puede tardar en Render)...";
+                    progressStatus.textContent = "Generando audio y efectos (puede tardar un momento)...";
                 }
                 progressFill.style.width = percent + '%';
                 progressPercent.textContent = percent + '%';
@@ -442,24 +442,24 @@
 
             progressFill.style.width = '100%';
             progressPercent.textContent = '100%';
-            progressStatus.textContent = exito ? "¡Completado!" : "Error o Timeout en el proceso";
+            progressStatus.textContent = exito ? "¡Listo!" : "Hubo un detalle en el proceso";
 
             btn.disabled = false;
-            btn.innerHTML = `<i class="fa-solid fa-play"></i> Compilar y Generar`;
+            btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Crear música y partitura`;
         }
 
         async function ejecutar() {
-            let archivo = document.getElementById('archivo').value.trim() || 'Programa';
+            let archivo = document.getElementById('archivo').value.trim() || 'MiCancion';
             let notas = document.getElementById('codigo').value.trim();
             const salida = document.getElementById('salida');
 
             if (!notas) {
-                salida.textContent = "[Error] Ingresa notas o código válido antes de compilar.";
+                salida.textContent = "[Aviso] Por favor escribe algunas notas musicales antes de continuar.";
                 return;
             }
 
             iniciarCarga();
-            salida.textContent = "[Info] Procesando en el servidor de Render, por favor espera...";
+            salida.textContent = "[Info] Procesando tu música en el servidor, por favor espera...";
 
             try {
                 let resp = await fetch('/ejecutar', {
@@ -484,7 +484,7 @@
                     previewBox.innerHTML = `<iframe src="/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}#view=FitH&toolbar=0&navpanes=0" class="pdf-viewer"></iframe>`;
                     document.getElementById('dl-pdf').href = `/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}`;
                 } else {
-                    previewBox.innerHTML = `<div class="placeholder-text"><i class="fa-solid fa-circle-exclamation"></i><p>No se pudo generar el PDF.</p></div>`;
+                    previewBox.innerHTML = `<div class="placeholder-text"><i class="fa-solid fa-circle-exclamation"></i><p>No se pudo mostrar la partitura.</p></div>`;
                 }
 
                 if (res.ruta_mp3) {
@@ -504,7 +504,7 @@
                 finalizarCarga(true);
 
             } catch (e) {
-                salida.textContent = "[Error de Conexión / Timeout] El servidor tardó demasiado debido a las limitaciones de Render. Vuelve a intentarlo en un momento.";
+                salida.textContent = "[Aviso de Conexión] El servidor tardó un poco más de lo habitual debido a los recursos gratuitos. Vuelve a intentarlo en un momento.";
                 finalizarCarga(false);
             }
         }
