@@ -1,4 +1,3 @@
-antlr4-python3-runtime
 flask
-librosa
-numpy
+gunicorn
+antlr4-python3-runtime
