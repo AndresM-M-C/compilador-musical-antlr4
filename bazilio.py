@@ -320,7 +320,8 @@ def generar_salida(partitura, base, solo_ly=False, aviso=print):
             return False
         r = subprocess.run(cmd, capture_output=True, text=True)
         if r.returncode != 0:
-            detalle = r.stderr.strip()[-400:]
+            # Mostramos todo el mensaje de error de LilyPond sin recortes
+            detalle = r.stderr.strip()
             aviso(f"Aviso: falló {cmd[0]} al generar {descripcion}:\n{detalle}")
             return False
         return True
