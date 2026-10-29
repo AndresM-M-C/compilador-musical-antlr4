@@ -45,6 +45,8 @@ class Handler(SimpleHTTPRequestHandler):
 
             nombre_carpeta = os.path.splitext(nombre_archivo)[0]
 
+            # Nota: Zenity fallará en entornos cloud (como Render) por no tener interfaz gráfica,
+            # pero el bloque try-except capturará el error y usará la carpeta local "programas".
             dir_elegido = ""
             try:
                 proceso = subprocess.run(
@@ -54,7 +56,7 @@ class Handler(SimpleHTTPRequestHandler):
                 if proceso.returncode == 0:
                     dir_elegido = proceso.stdout.strip()
             except Exception as e:
-                print(f"No se pudo abrir el selector nativo: {e}")
+                print(f"No se pudo abrir el selector nativo (entorno sin pantalla): {e}")
 
             if not dir_elegido:
                 dir_propio = os.path.join("programas", nombre_carpeta)
@@ -88,5 +90,9 @@ class Handler(SimpleHTTPRequestHandler):
             }
             self.wfile.write(json.dumps(respuesta).encode('utf-8'))
 
-print("Servidor Bazilio corriendo en http://localhost:8000")
-HTTPServer(('localhost', 8000), Handler).serve_forever()
+if __name__ == '__main__':
+    # Lee el puerto que asigna Render dinámicamente o usa el 8000 por defecto
+    port = int(os.environ.get('PORT', 8000))
+    # CRÍTICO: Usar '0.0.0.0' para que Docker y Render expongan el puerto al exterior
+    print(f"Servidor Bazilio corriendo en el puerto {port}")
+    HTTPServer(('0.0.0.0', port), Handler).serve_forever()
