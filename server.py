@@ -6,6 +6,7 @@ import urllib.parse
 
 class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
+        # Endpoint para servir archivos generados (PDF, MP3) directamente para descarga
         if self.path.startswith('/archivo?'):
             parsed = urllib.parse.urlparse(self.path)
             query = urllib.parse.parse_qs(parsed.query)
@@ -15,8 +16,10 @@ class Handler(SimpleHTTPRequestHandler):
                     self.send_response(200)
                     if file_path.endswith('.mp3'):
                         self.send_header('Content-Type', 'audio/mpeg')
+                        self.send_header('Content-Disposition', f'attachment; filename="{os.path.basename(file_path)}"')
                     elif file_path.endswith('.pdf'):
                         self.send_header('Content-Type', 'application/pdf')
+                        self.send_header('Content-Disposition', f'attachment; filename="{os.path.basename(file_path)}"')
                     else:
                         self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
@@ -45,28 +48,15 @@ class Handler(SimpleHTTPRequestHandler):
 
             nombre_carpeta = os.path.splitext(nombre_archivo)[0]
 
-            dir_elegido = ""
-            try:
-                proceso = subprocess.run(
-                    ["zenity", "--file-selection", "--directory", "--title=Selecciona la carpeta de destino para Bazilio"],
-                    capture_output=True, text=True
-                )
-                if proceso.returncode == 0:
-                    dir_elegido = proceso.stdout.strip()
-            except Exception as e:
-                print(f"No se pudo abrir el selector nativo: {e}")
-
-            if not dir_elegido:
-                dir_propio = os.path.join("programas", nombre_carpeta)
-            else:
-                dir_propio = os.path.join(dir_elegido, nombre_carpeta)
-
+            # En la nube (Render) guardamos los archivos en una carpeta temporal del servidor (/tmp o programas/)
+            dir_propio = os.path.join("programas", nombre_carpeta)
             os.makedirs(dir_propio, exist_ok=True)
 
             ruta_bzl = os.path.join(dir_propio, nombre_archivo)
             with open(ruta_bzl, "w", encoding="utf-8") as f:
                 f.write(codigo_bzl)
 
+            # Ejecutamos el compilador Bazilio
             cmd = ["python3", "bazilio.py", ruta_bzl]
             res = subprocess.run(cmd, capture_output=True, text=True)
 
@@ -79,18 +69,16 @@ class Handler(SimpleHTTPRequestHandler):
             self.end_headers()
             
             salida = res.stderr.strip() if res.stderr else res.stdout.strip()
-            msg = f"Guardado y procesado en: {dir_propio}/\n\n{salida or 'Procesado correctamente.'}"
+            msg = f"¡Procesado correctamente en la nube!\n\n{salida or 'Compilación exitosa.'}"
             
             respuesta = {
                 'resultado': msg,
-                'ruta_mp3': mp3_path if os.path.exists(mp3_path) else None,
-                'ruta_pdf': pdf_path if os.path.exists(pdf_path) else None
+                'ruta_mp3': f"/archivo?ruta={urllib.parse.quote(mp3_path)}" if os.path.exists(mp3_path) else None,
+                'ruta_pdf': f"/archivo?ruta={urllib.parse.quote(pdf_path)}" if os.path.exists(pdf_path) else None
             }
             self.wfile.write(json.dumps(respuesta).encode('utf-8'))
 
 if __name__ == '__main__':
-    # Lee el puerto asignado por Render (o usa 8000 por defecto)
     port = int(os.environ.get('PORT', 8000))
     print(f"Servidor Bazilio corriendo en el puerto {port}")
-    # CRÍTICO: '0.0.0.0' permite que el contenedor exponga el puerto al exterior
     HTTPServer(('0.0.0.0', port), Handler).serve_forever()
