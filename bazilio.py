@@ -302,11 +302,11 @@ def texto_lilypond(partitura, tempo=120):
 
 def generar_salida(partitura, base, solo_ly=False, aviso=print):
     ruta_ly = base + ".ly"
-    contenido_ly = texto_lilypond(partitura).lstrip()
+    contenido_ly = texto_lilypond(partitura)
 
-    # Forzamos newline="\n" para compatibilidad total con Linux en Render
-    with open(ruta_ly, "w", encoding="utf-8", newline="\n") as f:
-        f.write(contenido_ly)
+    # Escritura en modo binario estricto para evitar caracteres ocultos y problemas de codificación/saltos de línea
+    with open(ruta_ly, "wb") as f:
+        f.write(contenido_ly.encode("utf-8"))
         
     generados = [ruta_ly]
     if solo_ly:
