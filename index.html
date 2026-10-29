@@ -284,7 +284,7 @@
         .downloads-container {
             margin-top: 20px;
             display: none;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
@@ -310,11 +310,14 @@
             background-color: #eff6ff;
         }
 
+        @media (min-width: 650px) {
+            .downloads-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
         @media (max-width: 900px) {
             .main-wrapper {
-                grid-template-columns: 1fr;
-            }
-            .downloads-container {
                 grid-template-columns: 1fr;
             }
         }
@@ -388,13 +391,16 @@
             <!-- Download Buttons -->
             <div class="downloads-container" id="downloads-container">
                 <a id="dl-pdf" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Descargar PDF
+                    <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> PDF
                 </a>
                 <a id="dl-mp3" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> Descargar MP3
+                    <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> MP3
+                </a>
+                <a id="dl-wav" class="btn-download" download target="_blank">
+                    <i class="fa-solid fa-file-waveform" style="color: #3b82f6;"></i> WAV
                 </a>
                 <a id="dl-midi" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-drum" style="color: #f59e0b;"></i> Descargar MIDI
+                    <i class="fa-solid fa-drum" style="color: #f59e0b;"></i> MIDI
                 </a>
             </div>
         </div>
@@ -492,6 +498,9 @@
                     audioWrapper.style.display = 'block';
                     document.getElementById('dl-mp3').href = `/archivo?ruta=${encodeURIComponent(res.ruta_mp3)}`;
                     
+                    let rutaWav = res.ruta_mp3.replace('.mp3', '.wav');
+                    document.getElementById('dl-wav').href = `/archivo?ruta=${encodeURIComponent(rutaWav)}`;
+
                     let rutaMidi = res.ruta_mp3.replace('.mp3', '.midi');
                     document.getElementById('dl-midi').href = `/archivo?ruta=${encodeURIComponent(rutaMidi)}`;
                     
