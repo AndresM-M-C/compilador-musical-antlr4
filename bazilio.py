@@ -313,15 +313,13 @@ def generar_salida(partitura, base, solo_ly=False, aviso=print):
     if solo_ly:
         return generados
 
-    # Extraemos el directorio y el nombre base del archivo para ejecutar LilyPond correctamente
     dir_trabajo = os.path.dirname(ruta_ly)
     nombre_ly = os.path.basename(ruta_ly)
     nombre_base = os.path.splitext(nombre_ly)[0]
 
     def correr(cmd, descripcion, cwd=None):
         if shutil.which(cmd[0]) is None:
-            aviso(
-                f"Aviso: no se encontró «{cmd[0]}», no se generó {descripcion}.")
+            aviso(f"Aviso: no se encontró «{cmd[0]}», no se generó {descripcion}.")
             return False
         r = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd)
         if r.returncode != 0:
@@ -336,20 +334,28 @@ def generar_salida(partitura, base, solo_ly=False, aviso=print):
     ]
     sf2_path = next((p for p in sf2_candidatos if os.path.exists(p)), sf2_candidatos[0])
 
+    midi_path = nombre_base + ".midi"
+    wav_path = nombre_base + ".wav"
+    mp3_path = nombre_base + ".mp3"
+
     pasos = [
-        # Ejecutamos lilypond dentro del directorio del archivo usando solo el nombre base
         (["lilypond", "-o", nombre_base, nombre_ly], "el PDF y el MIDI", [".pdf", ".midi"]),
-        (["fluidsynth", "-ni", "-F", nombre_base + ".wav", sf2_path, nombre_base + ".midi"], "el WAV", [".wav"]),
-        (["ffmpeg", "-y", "-loglevel", "error", "-i", nombre_base + ".wav",
-          "-codec:a", "libmp3lame", "-qscale:a", "2", nombre_base + ".mp3"], "el MP3", [".mp3"]),
+        (["fluidsynth", "-qi", "-O", "fast", "-F", wav_path, sf2_path, midi_path], "el WAV", [".wav"]),
+        (["ffmpeg", "-y", "-loglevel", "error", "-i", wav_path, "-codec:a", "libmp3lame", "-qscale:a", "4", mp3_path], "el MP3", [".mp3"]),
     ]
     
     for cmd, descripcion, extensiones in pasos:
         if not correr(cmd, descripcion, cwd=dir_trabajo):
             break
-        # Añadimos la ruta completa de los archivos generados
         generados += [os.path.join(dir_trabajo, nombre_base + e) for e in extensiones]
         
+    temporal_wav = os.path.join(dir_trabajo, wav_path)
+    if os.path.exists(temporal_wav):
+        try:
+            os.remove(temporal_wav)
+        except Exception:
+            pass
+
     return generados
 
 
