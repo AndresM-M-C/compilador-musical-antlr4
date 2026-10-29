@@ -334,27 +334,20 @@ def generar_salida(partitura, base, solo_ly=False, aviso=print):
     ]
     sf2_path = next((p for p in sf2_candidatos if os.path.exists(p)), sf2_candidatos[0])
 
-    midi_path = nombre_base + ".midi"
-    wav_path = nombre_base + ".wav"
-    mp3_path = nombre_base + ".mp3"
+    wav_file = nombre_base + ".wav"
+    midi_file = nombre_base + ".midi"
+    mp3_file = nombre_base + ".mp3"
 
     pasos = [
         (["lilypond", "-o", nombre_base, nombre_ly], "el PDF y el MIDI", [".pdf", ".midi"]),
-        (["fluidsynth", "-qi", "-O", "fast", "-F", wav_path, sf2_path, midi_path], "el WAV", [".wav"]),
-        (["ffmpeg", "-y", "-loglevel", "error", "-i", wav_path, "-codec:a", "libmp3lame", "-qscale:a", "4", mp3_path], "el MP3", [".mp3"]),
+        (["fluidsynth", "-ni", "-F", wav_file, sf2_path, midi_file], "el WAV", [".wav"]),
+        (["ffmpeg", "-y", "-loglevel", "error", "-i", wav_file, "-codec:a", "libmp3lame", "-qscale:a", "2", mp3_file], "el MP3", [".mp3"]),
     ]
     
     for cmd, descripcion, extensiones in pasos:
         if not correr(cmd, descripcion, cwd=dir_trabajo):
             break
         generados += [os.path.join(dir_trabajo, nombre_base + e) for e in extensiones]
-        
-    temporal_wav = os.path.join(dir_trabajo, wav_path)
-    if os.path.exists(temporal_wav):
-        try:
-            os.remove(temporal_wav)
-        except Exception:
-            pass
 
     return generados
 
