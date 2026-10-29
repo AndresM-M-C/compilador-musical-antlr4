@@ -16,4 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
-CMD ["python3", "server.py"]
+# Usamos Gunicorn para levantar el servidor Flask/HTTP de forma robusta en el puerto 8000
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "server:app"]
