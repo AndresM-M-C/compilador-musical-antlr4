@@ -6,12 +6,28 @@ import urllib.parse
 
 class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        # Manejo para servir los archivos generados (PDF, MP3, etc.)
         if self.path.startswith('/archivo?'):
             parsed = urllib.parse.urlparse(self.path)
             query = urllib.parse.parse_qs(parsed.query)
             if 'ruta' in query:
-                file_path = urllib.parse.unquote(query['ruta'][0])
+                raw_ruta = query['ruta'][0]
+                
+                # Manejar posibles casos de doble codificación o rutas anidadas
+                if 'ruta=' in raw_ruta:
+                    try:
+                        parsed_sub = urllib.parse.parse_qs(urllib.parse.urlparse(raw_ruta).query)
+                        if 'ruta' in parsed_sub:
+                            raw_ruta = parsed_sub['ruta'][0]
+                    except Exception:
+                        pass
+                
+                file_path = urllib.parse.unquote(raw_ruta).lstrip('/')
+                if file_path.startswith('./'):
+                    file_path = file_path[2:]
+                
+                if not os.path.exists(file_path) and os.path.exists(os.path.join(os.getcwd(), file_path)):
+                    file_path = os.path.join(os.getcwd(), file_path)
+
                 if os.path.exists(file_path):
                     self.send_response(200)
                     if file_path.endswith('.mp3'):
@@ -48,7 +64,6 @@ class Handler(SimpleHTTPRequestHandler):
 
             nombre_carpeta = os.path.splitext(nombre_archivo)[0]
 
-            # Creamos la carpeta de salida
             dir_propio = os.path.join("programas", nombre_carpeta)
             os.makedirs(dir_propio, exist_ok=True)
 
@@ -56,7 +71,6 @@ class Handler(SimpleHTTPRequestHandler):
             with open(ruta_bzl, "w", encoding="utf-8", newline="\n") as f:
                 f.write(codigo_bzl)
 
-            # Ejecutamos el compilador Bazilio
             cmd = ["python3", "bazilio.py", ruta_bzl]
             res = subprocess.run(cmd, capture_output=True, text=True)
 
