@@ -283,31 +283,21 @@ def nota_a_lilypond(valor):
     return f"{letra}{marcas}4"
 
 
-def version_lilypond():
-    try:
-        salida = subprocess.run(
-            ["lilypond", "--version"], capture_output=True, text=True).stdout
-        m = re.search(r"(\d+\.\d+\.\d+)", salida)
-        if m:
-            return m.group(1)
-    except (OSError, AttributeError):
-        pass
-    return "2.24.4"
-
-
 def texto_lilypond(partitura, tempo=120):
     notas = [nota_a_lilypond(v) for v in partitura]
     renglones = [" ".join(notas[i:i + 8]) for i in range(0, len(notas), 8)]
     cuerpo = "\n".join("      " + r for r in renglones)
-    return (f'\\version "{version_lilypond()}"\n'
-            "\\score {\n"
-            "  \\absolute {\n"
-            f"    \\tempo 4 = {tempo}\n"
-            f"{cuerpo}\n"
-            "  }\n"
-            "  \\layout { }\n"
-            "  \\midi { }\n"
-            "}\n")
+    return (
+        '\\version "2.24.4"\n'
+        "\\score {\n"
+        "  \\absolute {\n"
+        f"    \\tempo 4 = {tempo}\n"
+        f"{cuerpo}\n"
+        "  }\n"
+        "  \\layout { }\n"
+        "  \\midi { }\n"
+        "}\n"
+    )
 
 
 def generar_salida(partitura, base, solo_ly=False, aviso=print):
@@ -330,7 +320,6 @@ def generar_salida(partitura, base, solo_ly=False, aviso=print):
             return False
         return True
 
-    # Buscamos la ruta correcta del SoundFont en Debian/Ubuntu
     sf2_candidatos = [
         "/usr/share/sounds/sf2/FluidR3_GM.sf2",
         "/usr/share/soundfonts/FluidR3_GM.sf2"
