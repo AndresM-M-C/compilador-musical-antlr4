@@ -304,9 +304,11 @@ def generar_salida(partitura, base, solo_ly=False, aviso=print):
     ruta_ly = base + ".ly"
     contenido_ly = texto_lilypond(partitura)
 
-    # Escritura en modo binario estricto para evitar caracteres ocultos y problemas de codificación/saltos de línea
-    with open(ruta_ly, "wb") as f:
-        f.write(contenido_ly.encode("utf-8"))
+    # Escribimos con codificación limpia y forzamos el guardado físico a disco (fsync)
+    with open(ruta_ly, "w", encoding="utf-8", newline="\n") as f:
+        f.write(contenido_ly)
+        f.flush()
+        os.fsync(f.fileno())
         
     generados = [ruta_ly]
     if solo_ly:
