@@ -1,36 +1,4 @@
-import os
-import subprocess
-from http.server import HTTPServer, SimpleHTTPRequestHandler
-import json
-import urllib.parse
-
-class Handler(SimpleHTTPRequestHandler):
-    def do_GET(self):
-        # Endpoint para servir archivos generados (PDF, MP3) directamente para descarga
-        if self.path.startswith('/archivo?'):
-            parsed = urllib.parse.urlparse(self.path)
-            query = urllib.parse.parse_qs(parsed.query)
-            if 'ruta' in query:
-                file_path = query['ruta'][0]
-                if os.path.exists(file_path):
-                    self.send_response(200)
-                    if file_path.endswith('.mp3'):
-                        self.send_header('Content-Type', 'audio/mpeg')
-                        self.send_header('Content-Disposition', f'attachment; filename="{os.path.basename(file_path)}"')
-                    elif file_path.endswith('.pdf'):
-                        self.send_header('Content-Type', 'application/pdf')
-                        self.send_header('Content-Disposition', f'attachment; filename="{os.path.basename(file_path)}"')
-                    else:
-                        self.send_header('Content-Type', 'application/octet-stream')
-                    self.end_headers()
-                    with open(file_path, 'rb') as f:
-                        self.wfile.write(f.read())
-                    return
-            self.send_error(404, "Archivo no encontrado")
-            return
-        return super().do_GET()
-
-    def do_POST(self):
+def do_POST(self):
         if self.path == '/ejecutar':
             length = int(self.headers['Content-Length'])
             data = json.loads(self.rfile.read(length).decode('utf-8'))
@@ -48,7 +16,6 @@ class Handler(SimpleHTTPRequestHandler):
 
             nombre_carpeta = os.path.splitext(nombre_archivo)[0]
 
-            # En la nube (Render) guardamos los archivos en una carpeta temporal del servidor (/tmp o programas/)
             dir_propio = os.path.join("programas", nombre_carpeta)
             os.makedirs(dir_propio, exist_ok=True)
 
@@ -56,7 +23,7 @@ class Handler(SimpleHTTPRequestHandler):
             with open(ruta_bzl, "w", encoding="utf-8") as f:
                 f.write(codigo_bzl)
 
-            # Ejecutamos el compilador Bazilio
+            # Ejecuta bazilio.py
             cmd = ["python3", "bazilio.py", ruta_bzl]
             res = subprocess.run(cmd, capture_output=True, text=True)
 
@@ -68,8 +35,13 @@ class Handler(SimpleHTTPRequestHandler):
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
             
-            salida = res.stderr.strip() if res.stderr else res.stdout.strip()
-            msg = f"¡Procesado correctamente en la nube!\n\n{salida or 'Compilación exitosa.'}"
+            # Capturamos la salida completa o el error
+            salida_consola = (res.stdout + "\n" + res.stderr).strip()
+            
+            if os.path.exists(pdf_path) or os.path.exists(mp3_path):
+                msg = f"¡Procesado correctamente!\n{salida_consola}"
+            else:
+                msg = f"Error al generar la música/PDF:\n{salida_consola or 'Revisa la sintaxis de las notas.'}"
             
             respuesta = {
                 'resultado': msg,
@@ -77,8 +49,3 @@ class Handler(SimpleHTTPRequestHandler):
                 'ruta_pdf': f"/archivo?ruta={urllib.parse.quote(pdf_path)}" if os.path.exists(pdf_path) else None
             }
             self.wfile.write(json.dumps(respuesta).encode('utf-8'))
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8000))
-    print(f"Servidor Bazilio corriendo en el puerto {port}")
-    HTTPServer(('0.0.0.0', port), Handler).serve_forever()
