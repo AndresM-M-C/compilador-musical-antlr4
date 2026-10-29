@@ -3,209 +3,463 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bazilio</title>
+    <title>Bazilio | Compilador Musical</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent: #3b82f6;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --error: #ef4444;
+            --terminal-bg: #0f172a;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: #f4f7f6;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
         }
 
-        .main-wrapper {
+        /* Header Bar */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 25px;
             display: flex;
-            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .brand h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .badge {
+            background: #dbeafe;
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Main Layout */
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
             gap: 25px;
             width: 100%;
-            max-width: 1100px;
-            align-items: stretch;
+            max-width: 1200px;
+            align-items: start;
         }
 
-        .container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            flex: 1;
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            padding: 28px;
             display: flex;
             flex-direction: column;
         }
 
-        .preview-container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            flex: 1.2;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        h1, h2 {
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
             margin-bottom: 20px;
-            font-size: 1.4rem;
-            color: #2c3e50;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
+        .card-title i {
+            color: var(--primary);
+        }
+
+        /* Form Controls */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #4a5568;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.88rem;
+            color: #334155;
         }
 
         input[type="text"], textarea {
             width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             font-size: 0.95rem;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            transition: all 0.2s ease;
             outline: none;
         }
 
         input[type="text"]:focus, textarea:focus {
-            border-color: #3182ce;
-            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+            background-color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
         textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 140px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
-        button {
+        /* Submit Button */
+        .btn-submit {
             width: 100%;
-            padding: 12px;
-            background-color: #3182ce;
+            padding: 14px;
+            background-color: var(--primary);
             color: #ffffff;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s ease;
         }
 
-        button:hover {
-            background-color: #2b6cb0;
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
         }
 
-        button:active {
-            transform: scale(0.98);
+        .btn-submit:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
-        pre#salida {
+        /* Progress & Loader */
+        .progress-container {
             margin-top: 20px;
-            background-color: #e94c4c;
-            color: #ffffff;
-            padding: 14px;
-            border-radius: 6px;
-            font-family: 'Courier New', Courier, monospace;
+            display: none;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), #60a5fa);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* Console Log / Status Output */
+        .console-box {
+            margin-top: 20px;
+            background-color: var(--terminal-bg);
+            color: #f1f5f9;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
             white-space: pre-wrap;
             word-wrap: break-word;
-            min-height: 48px;
-            font-size: 0.85rem;
+            max-height: 150px;
+            overflow-y: auto;
+            border-left: 4px solid var(--primary);
         }
 
+        /* Preview Panel */
         .preview-box {
             width: 100%;
-            height: 350px;
-            overflow: hidden;
-            position: relative;
+            height: 380px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background-color: #f8fafc;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 2px dashed #e2e8f0;
-            border-radius: 8px;
-            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
         }
 
         .pdf-viewer {
             width: 100%;
             height: 100%;
             border: none;
-            background: white;
+        }
+
+        .placeholder-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .placeholder-text i {
+            font-size: 2.5rem;
+            color: #cbd5e0;
+        }
+
+        /* Audio Player */
+        .audio-wrapper {
+            margin-top: 20px;
+            width: 100%;
+            display: none;
         }
 
         .audio-player {
             width: 100%;
-            margin-top: 15px;
+            border-radius: 8px;
             outline: none;
         }
 
-        .placeholder-text {
-            color: #a0aec0;
-            font-size: 0.95rem;
-            text-align: center;
+        /* Download Section */
+        .downloads-container {
+            margin-top: 20px;
+            display: none;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
         }
 
-        @media (max-width: 850px) {
+        .btn-download {
+            padding: 10px 12px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-download:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background-color: #eff6ff;
+        }
+
+        @media (max-width: 900px) {
             .main-wrapper {
-                flex-direction: column;
+                grid-template-columns: 1fr;
+            }
+            .downloads-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
 
+    <header>
+        <div class="brand">
+            <i class="fa-solid fa-music"></i>
+            <h1>Bazilio</h1>
+            <span class="badge">Compiler Web v2.0</span>
+        </div>
+    </header>
+
     <div class="main-wrapper">
-        <div class="container">
-            <h1>Ejecutar Bazilio</h1>
-
-            <div class="form-group">
-                <label for="archivo">Archivo:</label>
-                <input type="text" id="archivo" value="">
+        <!-- Editor Column -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fa-solid fa-code"></i> Editor de Notación
             </div>
 
             <div class="form-group">
-                <label for="codigo">Notas / Texto simple:</label>
-                <textarea id="codigo" rows="6" placeholder="Ingresa las notaciones (ej. C D E G)"></textarea>
+                <label for="archivo">Nombre del Proyecto:</label>
+                <input type="text" id="archivo" placeholder="ej. MiMelodia">
+            </div>
+
+            <div class="form-group">
+                <label for="codigo">Notas / Código Bazilio:</label>
+                <textarea id="codigo" placeholder="Ingresa las notaciones (ej. C D E G)"></textarea>
             </div>
             
-            <button onclick="ejecutar()">Ejecutar bazilio.py</button>
-            
-            <pre id="salida">Esperando ejecución...</pre>
+            <button id="btn-ejecutar" class="btn-submit" onclick="ejecutar()">
+                <i class="fa-solid fa-play"></i> Compilar y Generar
+            </button>
+
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progress-container">
+                <div class="progress-header">
+                    <span id="progress-status">Procesando...</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Console Log -->
+            <div class="console-box" id="salida">Esperando ejecución...</div>
         </div>
 
-        <div class="preview-container">
-            <h2>Vista Previa y Audio</h2>
-            <div class="preview-box" id="preview-box">
-                <p class="placeholder-text">Los resultados de la partitura y el reproductor de audio aparecerán aquí tras la ejecución.</p>
+        <!-- Preview Column -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fa-solid fa-file-pdf"></i> Vista Previa y Reproducción
             </div>
-            <audio id="audio-player" class="audio-player" controls style="display: none;"></audio>
+
+            <div class="preview-box" id="preview-box">
+                <div class="placeholder-text">
+                    <i class="fa-solid fa-sheet-music"></i>
+                    <p>La partitura en PDF y el reproductor de audio aparecerán aquí tras compilar.</p>
+                </div>
+            </div>
+
+            <!-- Audio Player -->
+            <div class="audio-wrapper" id="audio-wrapper">
+                <label style="margin-bottom: 6px;">Audio Sintetizado (MP3):</label>
+                <audio id="audio-player" class="audio-player" controls></audio>
+            </div>
+
+            <!-- Download Buttons -->
+            <div class="downloads-container" id="downloads-container">
+                <a id="dl-pdf" class="btn-download" download target="_blank">
+                    <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> PDF
+                </a>
+                <a id="dl-mp3" class="btn-download" download target="_blank">
+                    <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> MP3
+                </a>
+                <a id="dl-midi" class="btn-download" download target="_blank">
+                    <i class="fa-solid fa-drum" style="color: #f59e0b;"></i> MIDI
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
+        let progressInterval;
+
+        function iniciarCarga() {
+            const btn = document.getElementById('btn-ejecutar');
+            const progressContainer = document.getElementById('progress-container');
+            const progressFill = document.getElementById('progress-fill');
+            const progressStatus = document.getElementById('progress-status');
+            const progressPercent = document.getElementById('progress-percent');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Compilando...`;
+            progressContainer.style.display = 'block';
+            
+            let percent = 0;
+            progressFill.style.width = '0%';
+            
+            progressInterval = setInterval(() => {
+                if (percent < 30) {
+                    percent += 5;
+                    progressStatus.textContent = "Parseando sintaxis con ANTLR4...";
+                } else if (percent < 70) {
+                    percent += 2;
+                    progressStatus.textContent = "LilyPond generando partitura PDF...";
+                } else if (percent < 95) {
+                    percent += 1;
+                    progressStatus.textContent = "FluidSynth sintetizando audio MP3...";
+                }
+                progressFill.style.width = percent + '%';
+                progressPercent.textContent = percent + '%';
+            }, 600);
+        }
+
+        function finalizarCarga(exito = true) {
+            clearInterval(progressInterval);
+            const btn = document.getElementById('btn-ejecutar');
+            const progressFill = document.getElementById('progress-fill');
+            const progressPercent = document.getElementById('progress-percent');
+            const progressStatus = document.getElementById('progress-status');
+
+            progressFill.style.width = '100%';
+            progressPercent.textContent = '100%';
+            progressStatus.textContent = exito ? "¡Completado!" : "Error en el proceso";
+
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-play"></i> Compilar y Generar`;
+        }
+
         async function ejecutar() {
-            let archivo = document.getElementById('archivo').value;
+            let archivo = document.getElementById('archivo').value.trim() || 'Programa';
             let notas = document.getElementById('codigo').value.trim();
+            const salida = document.getElementById('salida');
 
             if (!notas) {
-                document.getElementById('salida').textContent = "Error: Ingresa notas o código válido antes de ejecutar.";
+                salida.textContent = "[Error] Ingresa notas o código válido antes de compilar.";
                 return;
             }
 
-            document.getElementById('salida').textContent = "Selecciona la carpeta de destino en tu explorador...";
+            iniciarCarga();
+            salida.textContent = "[Info] Enviando petición al servidor de Render...";
 
             try {
                 let resp = await fetch('/ejecutar', {
@@ -213,27 +467,44 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ archivo: archivo, notas: notas })
                 });
+
                 let res = await resp.json();
-                document.getElementById('salida').textContent = res.resultado;
+                salida.textContent = res.resultado;
 
                 const previewBox = document.getElementById('preview-box');
+                const audioWrapper = document.getElementById('audio-wrapper');
                 const audioPlayer = document.getElementById('audio-player');
+                const downloadsContainer = document.getElementById('downloads-container');
 
+                // PDF Preview
                 if (res.ruta_pdf) {
                     previewBox.innerHTML = `<iframe src="/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}#view=FitH&toolbar=0&navpanes=0" class="pdf-viewer"></iframe>`;
+                    document.getElementById('dl-pdf').href = `/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}`;
                 } else {
-                    previewBox.innerHTML = `<p class="placeholder-text">No se pudo generar la vista previa de la partitura.</p>`;
+                    previewBox.innerHTML = `<div class="placeholder-text"><i class="fa-solid fa-circle-exclamation"></i><p>No se pudo generar el PDF.</p></div>`;
                 }
 
+                // Audio MP3 Player
                 if (res.ruta_mp3) {
                     audioPlayer.src = `/archivo?ruta=${encodeURIComponent(res.ruta_mp3)}&t=${Date.now()}`;
-                    audioPlayer.style.display = 'block';
+                    audioWrapper.style.display = 'block';
+                    document.getElementById('dl-mp3').href = `/archivo?ruta=${encodeURIComponent(res.ruta_mp3)}`;
+                    
+                    // Ruta para descargar MIDI
+                    let rutaMidi = res.ruta_mp3.replace('.mp3', '.midi');
+                    document.getElementById('dl-midi').href = `/archivo?ruta=${encodeURIComponent(rutaMidi)}`;
+                    
+                    downloadsContainer.style.display = 'grid';
                 } else {
-                    audioPlayer.style.display = 'none';
+                    audioWrapper.style.display = 'none';
+                    downloadsContainer.style.display = 'none';
                 }
 
+                finalizarCarga(true);
+
             } catch (e) {
-                document.getElementById('salida').textContent = "Error: Inicia 'python3 server.py' en tu terminal.";
+                salida.textContent = "[Error de Conexión] No se pudo obtener respuesta del servidor en Render.";
+                finalizarCarga(false);
             }
         }
     </script>
