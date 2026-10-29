@@ -1,9 +1,10 @@
 FROM python:3.10-slim
 
-# Instala únicamente las dependencias de audio/partituras necesarias (sin Java)
+# Instala LilyPond, FluidSynth, FFmpeg y las fuentes de sonido MIDI
 RUN apt-get update && apt-get install -y \
     lilypond \
     fluidsynth \
+    fluid-soundfont-gm \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
