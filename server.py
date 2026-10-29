@@ -1,4 +1,4 @@
-import os
+Vimport os
 import subprocess
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import json
@@ -6,27 +6,27 @@ import urllib.parse
 
 class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        # Endpoint para servir archivos generados (PDF, MP3) directamente para descarga
+        # Manejo para servir los archivos generados (PDF, MP3, etc.)
         if self.path.startswith('/archivo?'):
             parsed = urllib.parse.urlparse(self.path)
             query = urllib.parse.parse_qs(parsed.query)
             if 'ruta' in query:
-                file_path = query['ruta'][0]
+                file_path = urllib.parse.unquote(query['ruta'][0])
                 if os.path.exists(file_path):
                     self.send_response(200)
                     if file_path.endswith('.mp3'):
                         self.send_header('Content-Type', 'audio/mpeg')
-                        self.send_header('Content-Disposition', f'attachment; filename="{os.path.basename(file_path)}"')
+                        self.send_header('Content-Disposition', f'inline; filename="{os.path.basename(file_path)}"')
                     elif file_path.endswith('.pdf'):
                         self.send_header('Content-Type', 'application/pdf')
-                        self.send_header('Content-Disposition', f'attachment; filename="{os.path.basename(file_path)}"')
+                        self.send_header('Content-Disposition', f'inline; filename="{os.path.basename(file_path)}"')
                     else:
                         self.send_header('Content-Type', 'application/octet-stream')
                     self.end_headers()
                     with open(file_path, 'rb') as f:
                         self.wfile.write(f.read())
                     return
-            self.send_error(404, "Archivo no encontrado")
+            self.send_error(404, "Archivo no encontrado.")
             return
         return super().do_GET()
 
@@ -48,12 +48,12 @@ class Handler(SimpleHTTPRequestHandler):
 
             nombre_carpeta = os.path.splitext(nombre_archivo)[0]
 
-            # Guardamos los archivos en la carpeta temporal del servidor
+            # Creamos la carpeta de salida
             dir_propio = os.path.join("programas", nombre_carpeta)
             os.makedirs(dir_propio, exist_ok=True)
 
             ruta_bzl = os.path.join(dir_propio, nombre_archivo)
-            with open(ruta_bzl, "w", encoding="utf-8") as f:
+            with open(ruta_bzl, "w", encoding="utf-8", newline="\n") as f:
                 f.write(codigo_bzl)
 
             # Ejecutamos el compilador Bazilio
@@ -84,7 +84,6 @@ class Handler(SimpleHTTPRequestHandler):
             try:
                 self.wfile.write(json.dumps(respuesta).encode('utf-8'))
             except (BrokenPipeError, ConnectionResetError):
-                # El cliente cerró la conexión antes de recibir la respuesta; lo ignoramos de forma segura.
                 pass
 
 if __name__ == '__main__':
