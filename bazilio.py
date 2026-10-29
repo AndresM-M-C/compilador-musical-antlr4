@@ -290,7 +290,7 @@ def texto_lilypond(partitura, tempo=120):
     return (
         '\\version "2.24.4"\n'
         "\\score {\n"
-        "  \\absolute {\n"
+        "  {\n"
         f"    \\tempo 4 = {tempo}\n"
         f"{cuerpo}\n"
         "  }\n"
@@ -304,7 +304,6 @@ def generar_salida(partitura, base, solo_ly=False, aviso=print):
     ruta_ly = base + ".ly"
     contenido_ly = texto_lilypond(partitura)
 
-    # Escribimos con codificación limpia y forzamos el guardado físico a disco (fsync)
     with open(ruta_ly, "w", encoding="utf-8", newline="\n") as f:
         f.write(contenido_ly)
         f.flush()
