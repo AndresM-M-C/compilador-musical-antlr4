@@ -46,14 +46,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px;
+            padding: 30px 40px;
         }
 
         /* Header Bar */
         header {
             width: 100%;
-            max-width: 1200px;
-            margin-bottom: 30px;
+            max-width: 1600px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -100,14 +100,15 @@
             letter-spacing: 0.5px;
         }
 
-        /* Main Layout */
+        /* Main Layout - Ampliado */
         .main-wrapper {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 28px;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 30px;
             width: 100%;
-            max-width: 1200px;
-            align-items: start;
+            max-width: 1600px;
+            flex: 1;
+            align-items: stretch;
         }
 
         .card {
@@ -117,13 +118,14 @@
             border-radius: 20px;
             border: 1px solid var(--card-border);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            padding: 30px;
+            padding: 32px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
         }
 
         .card-title {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--text-main);
             margin-bottom: 22px;
@@ -146,7 +148,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
         }
 
@@ -155,7 +157,7 @@
             padding: 14px 16px;
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             background-color: var(--input-bg);
             color: var(--text-main);
             transition: all 0.2s ease;
@@ -169,21 +171,21 @@
 
         textarea {
             resize: vertical;
-            min-height: 140px;
+            min-height: 220px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             line-height: 1.6;
         }
 
         /* Submit Button */
         .btn-submit {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             background: var(--primary-gradient);
             color: #ffffff;
             border: none;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -208,7 +210,7 @@
 
         /* Progress & Loader */
         .progress-container {
-            margin-top: 22px;
+            margin-top: 20px;
             display: none;
         }
 
@@ -246,55 +248,63 @@
             padding: 16px;
             border-radius: 12px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             white-space: pre-wrap;
             word-wrap: break-word;
-            max-height: 150px;
+            max-height: 160px;
             overflow-y: auto;
             border: 1px solid var(--border-color);
             border-left: 4px solid var(--primary);
         }
 
-        /* Preview Panel */
+        /* Preview Panel - Imagen en Alta Definición */
         .preview-box {
             width: 100%;
-            height: 380px;
+            min-height: 480px;
+            flex: 1;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            background-color: var(--input-bg);
+            border-radius: 14px;
+            background-color: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: auto;
             position: relative;
+            padding: 20px;
         }
 
-        .pdf-viewer {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .score-image {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
         }
 
         .placeholder-text {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             text-align: center;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 14px;
+            background-color: var(--input-bg);
+            width: 100%;
+            height: 100%;
+            justify-content: center;
         }
 
         .placeholder-text i {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             color: #374151;
         }
 
         /* Audio Player */
         .audio-wrapper {
-            margin-top: 22px;
+            margin-top: 24px;
             width: 100%;
             display: none;
         }
@@ -309,7 +319,7 @@
         .downloads-container {
             margin-top: 20px;
             display: none;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 12px;
         }
 
@@ -319,7 +329,7 @@
             border: 1px solid var(--border-color);
             border-radius: 10px;
             color: var(--text-main);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
             text-decoration: none;
             display: flex;
@@ -336,15 +346,12 @@
             transform: translateY(-2px);
         }
 
-        @media (min-width: 650px) {
-            .downloads-container {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .main-wrapper {
                 grid-template-columns: 1fr;
+            }
+            .downloads-container {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -366,32 +373,34 @@
     <div class="main-wrapper">
         <!-- Editor Column -->
         <div class="card">
-            <div class="card-title">
-                <i class="fa-solid fa-sliders"></i> Escribe tu Música
-            </div>
-
-            <div class="form-group">
-                <label for="archivo">Título de tu canción:</label>
-                <input type="text" id="archivo" placeholder="ej. MiMelodia">
-            </div>
-
-            <div class="form-group">
-                <label for="codigo">Notas musicales:</label>
-                <textarea id="codigo" placeholder="Escribe tus notas aquí (ej. C D E G)"></textarea>
-            </div>
-            
-            <button id="btn-ejecutar" class="btn-submit" onclick="ejecutar()">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> Crear música y partitura
-            </button>
-
-            <!-- Progress Bar -->
-            <div class="progress-container" id="progress-container">
-                <div class="progress-header">
-                    <span id="progress-status">Preparando...</span>
-                    <span id="progress-percent">0%</span>
+            <div>
+                <div class="card-title">
+                    <i class="fa-solid fa-sliders"></i> Escribe tu Música
                 </div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="progress-fill"></div>
+
+                <div class="form-group">
+                    <label for="archivo">Título de tu canción:</label>
+                    <input type="text" id="archivo" placeholder="ej. MiMelodia">
+                </div>
+
+                <div class="form-group">
+                    <label for="codigo">Notas musicales:</label>
+                    <textarea id="codigo" placeholder="Escribe tus notas aquí (ej. C D E G)"></textarea>
+                </div>
+                
+                <button id="btn-ejecutar" class="btn-submit" onclick="ejecutar()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Crear música y partitura
+                </button>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progress-container">
+                    <div class="progress-header">
+                        <span id="progress-status">Preparando...</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
                 </div>
             </div>
 
@@ -401,37 +410,39 @@
 
         <!-- Preview Column -->
         <div class="card">
-            <div class="card-title">
-                <i class="fa-solid fa-headphones"></i> Escucha y Visualiza
-            </div>
-
-            <div class="preview-box" id="preview-box">
-                <div class="placeholder-text">
-                    <i class="fa-solid fa-file-audio"></i>
-                    <p>Aquí aparecerá la partitura y el reproductor de audio una vez que crees tu música.</p>
+            <div style="display: flex; flex-direction: column; height: 100%;">
+                <div class="card-title">
+                    <i class="fa-solid fa-headphones"></i> Escucha y Visualiza
                 </div>
-            </div>
 
-            <!-- Audio Player -->
-            <div class="audio-wrapper" id="audio-wrapper">
-                <label style="margin-bottom: 8px;">Escuchar Canción (MP3):</label>
-                <audio id="audio-player" class="audio-player" controls></audio>
-            </div>
+                <div class="preview-box" id="preview-box">
+                    <div class="placeholder-text">
+                        <i class="fa-solid fa-image"></i>
+                        <p>Aquí aparecerá la partitura desplegada como imagen y el reproductor de audio.</p>
+                    </div>
+                </div>
 
-            <!-- Download Buttons -->
-            <div class="downloads-container" id="downloads-container">
-                <a id="dl-pdf" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> PDF
-                </a>
-                <a id="dl-mp3" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> MP3
-                </a>
-                <a id="dl-wav" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-waveform" style="color: #3b82f6;"></i> WAV
-                </a>
-                <a id="dl-midi" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-sliders" style="color: #f59e0b;"></i> MIDI
-                </a>
+                <!-- Audio Player -->
+                <div class="audio-wrapper" id="audio-wrapper">
+                    <label style="margin-bottom: 8px;">Escuchar Canción (MP3):</label>
+                    <audio id="audio-player" class="audio-player" controls></audio>
+                </div>
+
+                <!-- Download Buttons -->
+                <div class="downloads-container" id="downloads-container">
+                    <a id="dl-pdf" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> PDF
+                    </a>
+                    <a id="dl-mp3" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> MP3
+                    </a>
+                    <a id="dl-wav" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-file-waveform" style="color: #3b82f6;"></i> WAV
+                    </a>
+                    <a id="dl-midi" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-sliders" style="color: #f59e0b;"></i> MIDI
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -459,10 +470,10 @@
                     progressStatus.textContent = "Leyendo tus notas musicales...";
                 } else if (percent < 50) {
                     percent += 1;
-                    progressStatus.textContent = "Diseñando tu partitura en PDF...";
+                    progressStatus.textContent = "Diseñando tu partitura...";
                 } else if (percent < 90) {
                     percent += 1;
-                    progressStatus.textContent = "Generando audio y efectos (puede tardar un momento)...";
+                    progressStatus.textContent = "Generando audio y efectos...";
                 }
                 progressFill.style.width = percent + '%';
                 progressPercent.textContent = percent + '%';
@@ -517,7 +528,9 @@
                 const downloadsContainer = document.getElementById('downloads-container');
 
                 if (res.ruta_pdf) {
-                    previewBox.innerHTML = `<iframe src="/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}#view=FitH&toolbar=0&navpanes=0" class="pdf-viewer"></iframe>`;
+                    // Cambiamos la extensión .pdf a .png para visualizar la imagen fija generada por el compilador
+                    let rutaImg = res.ruta_pdf.replace('.pdf', '.png');
+                    previewBox.innerHTML = `<img src="/archivo?ruta=${encodeURIComponent(rutaImg)}&t=${Date.now()}" alt="Partitura Musical" class="score-image">`;
                     document.getElementById('dl-pdf').href = `/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}`;
                 } else {
                     previewBox.innerHTML = `<div class="placeholder-text"><i class="fa-solid fa-circle-exclamation"></i><p>No se pudo mostrar la partitura.</p></div>`;
