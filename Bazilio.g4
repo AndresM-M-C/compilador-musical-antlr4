@@ -58,7 +58,7 @@ MIENTRAS: 'while' ;
 
 TEXTO   : '"' ~["\r\n]* '"' | '\u201C' ~[\u201D\r\n]* '\u201D' ;
 ENTERO  : [0-9]+ ;
-NOTA    : [A-G] [0-8]? ;
+NOTA    : [A-G] ('#' | 'b')? [0-8]? ;
 PROC_ID : [A-Z] [a-zA-Z0-9_]* ;
 VAR     : [a-z] [a-zA-Z0-9_]* ;
 
