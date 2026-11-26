@@ -134,6 +134,39 @@ def _renderizar_paginas_png(pdf_path, base_path):
     return paginas
 
 
+def _construir_codigo_bzl(texto_entrada):
+    """Construye un programa Bazilio válido a partir de notas sueltas, sentencias o bloque Main."""
+    crudo = (texto_entrada or "").strip()
+    if not crudo:
+        return ""
+    if "|:" in crudo:
+        return crudo
+
+    tiene_instruccion_bloque = bool(
+        re.search(
+            r"(^\s*(?:instrumento|tempo)\b|<-|<<|8<|<w>|\(\s*:\s*\)|\b[A-Z][A-Za-z0-9_]*\s*\()",
+            crudo,
+            re.MULTILINE,
+        )
+    )
+    if tiene_instruccion_bloque:
+        lineas_formateadas = []
+        for linea in crudo.splitlines():
+            limpia = linea.strip()
+            if not limpia:
+                continue
+            if limpia.startswith("#"):
+                lineas_formateadas.append(f"    {limpia}")
+            elif re.match(r"^(?:instrumento|tempo)\b", limpia) or "<-" in limpia or "<<" in limpia or "8<" in limpia or "<w>" in limpia or re.match(r"^\(\s*:\s*\)", limpia) or re.match(r"^[A-Z][A-Za-z0-9_]*\s*\(", limpia):
+                lineas_formateadas.append(f"    {limpia}")
+            else:
+                lineas_formateadas.append(f"    (:) {{ {limpia} }}")
+        cuerpo = "\n".join(lineas_formateadas) if lineas_formateadas else "    (:) { }"
+        return f"Main |:\n{cuerpo}\n:|"
+
+    return f"Main |:\n    (:) {{ {crudo} }}\n:|"
+
+
 class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith("/archivo?"):
@@ -142,7 +175,6 @@ class Handler(SimpleHTTPRequestHandler):
             if "ruta" in query:
                 raw_ruta = query["ruta"][0]
 
-                # Manejar posibles casos de doble codificación o rutas anidadas
                 if "ruta=" in raw_ruta:
                     try:
                         parsed_sub = urllib.parse.parse_qs(
@@ -199,10 +231,7 @@ class Handler(SimpleHTTPRequestHandler):
             nombre_archivo = nombre_carpeta + ".bzl"
 
             notas_simples = data.get("notas", "")
-            if "|:" not in notas_simples:
-                codigo_bzl = f"Main |:\n    (:) {{ {notas_simples} }}\n:|"
-            else:
-                codigo_bzl = notas_simples
+            codigo_bzl = _construir_codigo_bzl(notas_simples)
 
             dir_propio = os.path.join("programas", nombre_carpeta)
             os.makedirs(dir_propio, exist_ok=True)
