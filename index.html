@@ -11,19 +11,22 @@
 
     <style>
         :root {
-            --bg-color: #070b14;
-            --bg-elevated: #0d1322;
-            --card-bg: rgba(15, 23, 42, 0.82);
-            --card-border: rgba(148, 163, 184, 0.14);
+            --bg-color: #060a14;
+            --bg-elevated: #0d1426;
+            --card-bg: rgba(15, 23, 42, 0.86);
+            --card-border: rgba(148, 163, 184, 0.16);
             --primary: #6366f1;
             --primary-hover: #4f46e5;
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 55%, #06b6d4 100%);
-            --accent: #a855f7;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 55%, #06b6d4 100%);
+            --accent: #ec4899;
             --cyan: #22d3ee;
+            --amber: #f59e0b;
+            --violet: #c084fc;
+            --emerald: #10b981;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --input-bg: #0b1120;
-            --border-color: rgba(148, 163, 184, 0.18);
+            --input-bg: #090f1d;
+            --border-color: rgba(148, 163, 184, 0.2);
             --terminal-bg: #030712;
             --success: #10b981;
             --warning: #f59e0b;
@@ -40,30 +43,30 @@
         body {
             background-color: var(--bg-color);
             background-image:
-                radial-gradient(circle at 12% 15%, rgba(99, 102, 241, 0.18) 0%, transparent 45%),
-                radial-gradient(circle at 88% 12%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 75% 88%, rgba(168, 85, 247, 0.14) 0%, transparent 45%);
+                radial-gradient(circle at 10% 12%, rgba(99, 102, 241, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 90% 10%, rgba(6, 182, 212, 0.16) 0%, transparent 42%),
+                radial-gradient(circle at 80% 88%, rgba(236, 72, 153, 0.15) 0%, transparent 45%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 20px 44px;
+            padding: 18px 20px 44px;
         }
 
         /* Top DAW Studio Bar */
         .topbar {
             width: 100%;
-            max-width: 1380px;
-            margin-bottom: 22px;
-            padding: 14px 22px;
-            background: rgba(15, 23, 42, 0.78);
+            max-width: 1680px;
+            margin-bottom: 20px;
+            padding: 14px 24px;
+            background: rgba(15, 23, 42, 0.84);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border: 1px solid var(--card-border);
             border-radius: 18px;
-            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.38);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -85,7 +88,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 22px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 6px 22px rgba(236, 72, 153, 0.35);
             position: relative;
             overflow: hidden;
         }
@@ -121,9 +124,9 @@
         }
 
         .badge {
-            background: rgba(99, 102, 241, 0.16);
-            border: 1px solid rgba(99, 102, 241, 0.35);
-            color: #c7d2fe;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(236, 72, 153, 0.25));
+            border: 1px solid rgba(236, 72, 153, 0.45);
+            color: #fbcfe8;
             font-size: 0.68rem;
             font-weight: 700;
             padding: 3px 10px;
@@ -221,7 +224,7 @@
 
         .btn-ghost:hover {
             border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.14);
+            background: rgba(99, 102, 241, 0.16);
             transform: translateY(-1px);
         }
 
@@ -230,24 +233,24 @@
         }
 
         .btn-bzl-accent {
-            border-color: rgba(34, 211, 238, 0.35);
+            border-color: rgba(34, 211, 238, 0.4);
             color: #a5f3fc;
-            background: rgba(8, 51, 68, 0.35);
+            background: rgba(8, 51, 68, 0.42);
         }
 
         .btn-bzl-accent:hover {
             border-color: var(--cyan);
-            background: rgba(6, 182, 212, 0.2);
+            background: rgba(6, 182, 212, 0.24);
             color: #ffffff;
         }
 
         /* Main Studio Grid */
         .main-wrapper {
             display: grid;
-            grid-template-columns: minmax(360px, 1fr) minmax(420px, 1.32fr);
+            grid-template-columns: minmax(420px, 1fr) minmax(520px, 1.38fr);
             gap: 24px;
             width: 100%;
-            max-width: 1380px;
+            max-width: 1680px;
             align-items: start;
         }
 
@@ -257,7 +260,7 @@
             -webkit-backdrop-filter: blur(18px);
             border-radius: 20px;
             border: 1px solid var(--card-border);
-            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.42);
+            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.44);
             padding: 24px;
             display: flex;
             flex-direction: column;
@@ -282,15 +285,7 @@
         }
 
         .card-title i {
-            color: var(--primary);
-        }
-
-        /* Form Controls */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 10px;
-            align-items: end;
+            color: var(--cyan);
         }
 
         .form-group {
@@ -314,11 +309,11 @@
 
         .filename-chip {
             font-family: 'Fira Code', monospace;
-            font-size: 0.74rem;
-            padding: 3px 9px;
-            border-radius: 7px;
-            background: rgba(34, 211, 238, 0.1);
-            border: 1px solid rgba(34, 211, 238, 0.25);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(34, 211, 238, 0.12);
+            border: 1px solid rgba(34, 211, 238, 0.32);
             color: #67e8f9;
         }
 
@@ -335,13 +330,13 @@
         }
 
         input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.18);
         }
 
         textarea {
             resize: vertical;
-            min-height: 170px;
+            min-height: 175px;
             font-family: 'Fira Code', monospace;
             font-size: 0.88rem;
             line-height: 1.6;
@@ -349,7 +344,7 @@
 
         /* Quick DAW Studio Controls */
         .studio-rack {
-            background: rgba(11, 17, 32, 0.85);
+            background: rgba(9, 15, 29, 0.9);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 14px;
@@ -360,8 +355,8 @@
 
         .rack-controls {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 10px;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 12px;
         }
 
         .rack-item {
@@ -377,10 +372,10 @@
         }
 
         .btn-mini {
-            padding: 9px 11px;
+            padding: 9px 12px;
             border-radius: 9px;
             border: 1px solid var(--border-color);
-            background: rgba(30, 41, 59, 0.7);
+            background: rgba(30, 41, 59, 0.75);
             color: var(--text-main);
             font-size: 0.78rem;
             font-weight: 600;
@@ -390,11 +385,12 @@
         }
 
         .btn-mini:hover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.22);
+            border-color: var(--cyan);
+            background: rgba(6, 182, 212, 0.2);
+            color: #ffffff;
         }
 
-        /* Mini Interactive Piano Keyboard */
+        /* Color Legend for Note Buttons */
         .piano-header {
             display: flex;
             align-items: center;
@@ -404,28 +400,62 @@
         }
 
         .piano-title {
-            font-size: 0.76rem;
-            font-weight: 600;
-            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #e2e8f0;
             display: flex;
             align-items: center;
             gap: 6px;
+        }
+
+        .legend-pills {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            font-size: 0.68rem;
+            font-weight: 700;
+        }
+
+        .legend-natural {
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            color: #6ee7b7;
+        }
+
+        .legend-sharp {
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #fcd34d;
+        }
+
+        .legend-flat {
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(192, 132, 252, 0.2);
+            border: 1px solid rgba(192, 132, 252, 0.5);
+            color: #f3e8ff;
         }
 
         .octave-bar {
             display: inline-flex;
             align-items: center;
             gap: 4px;
+            flex-wrap: wrap;
         }
 
         .octave-btn {
-            padding: 3px 8px;
-            border-radius: 6px;
+            padding: 4px 8px;
+            border-radius: 7px;
             border: 1px solid var(--border-color);
             background: var(--input-bg);
             color: var(--text-muted);
             font-size: 0.73rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
         }
@@ -433,74 +463,98 @@
         .octave-btn.active, .octave-btn:hover {
             color: #ffffff;
             border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.28);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.45), rgba(236, 72, 153, 0.35));
         }
 
         .piano-keys {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+            gap: 6px;
         }
 
         .key-group {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
         }
 
+        /* Natural note button: vibrant emerald-mint tint */
         .key-btn {
-            padding: 8px 4px;
-            border-radius: 8px;
-            border: 1px solid rgba(148, 163, 184, 0.22);
-            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #0f172a;
+            padding: 9px 4px;
+            border-radius: 9px;
+            border: 1px solid rgba(16, 185, 129, 0.55);
+            background: linear-gradient(180deg, #ecfdf5 0%, #a7f3d0 100%);
+            color: #064e3b;
             font-family: 'Fira Code', monospace;
-            font-size: 0.76rem;
-            font-weight: 700;
+            font-size: 0.78rem;
+            font-weight: 800;
             cursor: pointer;
-            transition: transform 0.1s ease, box-shadow 0.15s ease;
+            transition: transform 0.12s ease, box-shadow 0.15s ease;
             text-align: center;
         }
 
-        .key-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+        .key-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(16, 185, 129, 0.4);
         }
 
-        .key-btn:active {
+        .key-btn:active:not(:disabled) {
             transform: translateY(1px);
         }
 
         .key-accidentals {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3px;
+            gap: 4px;
         }
 
-        .key-black {
-            padding: 5px 2px;
-            border-radius: 6px;
-            border: 1px solid rgba(99, 102, 241, 0.35);
-            background: linear-gradient(180deg, #1e293b 0%, #090d16 100%);
-            color: #e2e8f0;
+        /* Flat note button (b): vibrant violet/magenta */
+        .key-flat {
+            padding: 6px 2px;
+            border-radius: 7px;
+            border: 1px solid rgba(192, 132, 252, 0.6);
+            background: linear-gradient(180deg, #581c87 0%, #3b0764 100%);
+            color: #f3e8ff;
             font-family: 'Fira Code', monospace;
-            font-size: 0.67rem;
-            font-weight: 600;
+            font-size: 0.68rem;
+            font-weight: 700;
             cursor: pointer;
             text-align: center;
-            transition: all 0.12s ease;
+            transition: all 0.14s ease;
         }
 
-        .key-black:hover {
-            border-color: var(--cyan);
-            color: #67e8f9;
+        .key-flat:hover:not(:disabled) {
+            border-color: #e879f9;
+            box-shadow: 0 4px 12px rgba(192, 132, 252, 0.45);
             transform: translateY(-1px);
         }
 
-        .key-black:disabled {
-            opacity: 0.2;
+        /* Sharp note button (#): vibrant amber/gold */
+        .key-sharp {
+            padding: 6px 2px;
+            border-radius: 7px;
+            border: 1px solid rgba(245, 158, 11, 0.65);
+            background: linear-gradient(180deg, #78350f 0%, #451a03 100%);
+            color: #fef3c7;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.14s ease;
+        }
+
+        .key-sharp:hover:not(:disabled) {
+            border-color: #fbbf24;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .key-flat:disabled, .key-sharp:disabled, .key-btn:disabled {
+            opacity: 0.22;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
         /* Editor Action Row */
@@ -516,20 +570,20 @@
             color: #ffffff;
             border: none;
             border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 700;
+            font-size: 0.96rem;
+            font-weight: 800;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             transition: all 0.2s ease;
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+            box-shadow: 0 6px 22px rgba(99, 102, 241, 0.4);
         }
 
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 10px 28px rgba(236, 72, 153, 0.45);
         }
 
         .btn-submit:active {
@@ -554,7 +608,7 @@
         /* Progress Bar */
         .progress-container {
             display: none;
-            background: rgba(11, 17, 32, 0.75);
+            background: rgba(9, 15, 29, 0.8);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 12px 14px;
@@ -598,8 +652,8 @@
             display: none;
             padding: 13px 15px;
             border-radius: 12px;
-            background: rgba(127, 29, 29, 0.42);
-            border: 1px solid rgba(239, 68, 68, 0.6);
+            background: rgba(127, 29, 29, 0.45);
+            border: 1px solid rgba(239, 68, 68, 0.65);
             color: #fecaca;
             font-size: 0.85rem;
             line-height: 1.45;
@@ -640,7 +694,7 @@
             max-height: 145px;
             overflow-y: auto;
             border: 1px solid var(--border-color);
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid var(--cyan);
             transition: border-color 0.25s ease, color 0.25s ease;
         }
 
@@ -684,9 +738,9 @@
         }
 
         .tab-btn.active {
-            background: rgba(99, 102, 241, 0.24);
+            background: rgba(99, 102, 241, 0.28);
             color: #ffffff;
-            box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.4);
+            box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.45);
         }
 
         .viewer-toolbar {
@@ -712,7 +766,7 @@
             padding: 6px 10px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            background: rgba(30, 41, 59, 0.65);
+            background: rgba(30, 41, 59, 0.7);
             color: var(--text-main);
             font-size: 0.78rem;
             font-weight: 600;
@@ -724,14 +778,14 @@
         }
 
         .tool-btn:hover:not(:disabled) {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.22);
+            border-color: var(--cyan);
+            background: rgba(6, 182, 212, 0.2);
         }
 
         .tool-btn.active {
             border-color: var(--cyan);
             color: #67e8f9;
-            background: rgba(6, 182, 212, 0.18);
+            background: rgba(6, 182, 212, 0.22);
         }
 
         .tool-btn:disabled {
@@ -749,10 +803,10 @@
 
         .preview-box {
             width: 100%;
-            height: 490px;
+            height: 520px;
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            background-color: #0b1120;
+            background-color: #090f1d;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -770,9 +824,9 @@
             user-select: none;
             touch-action: none;
             background:
-                radial-gradient(circle at center, rgba(30, 41, 59, 0.35), rgba(7, 11, 20, 0.9));
+                radial-gradient(circle at center, rgba(30, 41, 59, 0.35), rgba(6, 10, 20, 0.94));
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
         }
 
@@ -781,10 +835,13 @@
         }
 
         .sheet-stage {
-            transform-origin: center top;
+            width: 100%;
+            height: 100%;
+            transform-origin: center center;
             transition: transform 0.08s ease-out;
-            padding: 18px;
+            padding: 16px;
             display: flex;
+            align-items: center;
             justify-content: center;
         }
 
@@ -794,12 +851,14 @@
 
         .sheet-image {
             display: block;
-            max-width: none;
-            width: 660px;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
             height: auto;
+            object-fit: contain;
             background: #ffffff;
             border-radius: 8px;
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.58);
             pointer-events: none;
         }
 
@@ -832,9 +891,9 @@
             right: 12px;
             font-size: 0.72rem;
             color: #cbd5e1;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.88);
             border: 1px solid var(--border-color);
-            padding: 4px 9px;
+            padding: 4px 10px;
             border-radius: 999px;
             pointer-events: none;
         }
@@ -860,13 +919,13 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 5px 10px;
+            padding: 5px 11px;
             border-radius: 999px;
             font-size: 0.76rem;
-            font-weight: 600;
-            background: rgba(30, 41, 59, 0.8);
+            font-weight: 700;
+            background: rgba(30, 41, 59, 0.85);
             border: 1px solid var(--border-color);
-            color: #e2e8f0;
+            color: #f8fafc;
         }
 
         .measures-grid {
@@ -876,7 +935,7 @@
         }
 
         .measure-card {
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.92);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 10px 12px;
@@ -905,21 +964,21 @@
             border-radius: 8px;
             padding: 7px 4px;
             text-align: center;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(148, 163, 184, 0.16);
+            background: rgba(16, 185, 129, 0.16);
+            border: 1px solid rgba(16, 185, 129, 0.42);
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
 
         .note-tile.is-sharp {
-            border-color: rgba(34, 211, 238, 0.45);
-            background: rgba(8, 51, 68, 0.45);
+            border-color: rgba(245, 158, 11, 0.55);
+            background: rgba(120, 53, 15, 0.35);
         }
 
         .note-tile.is-flat {
-            border-color: rgba(168, 85, 247, 0.5);
-            background: rgba(59, 7, 100, 0.42);
+            border-color: rgba(192, 132, 252, 0.55);
+            background: rgba(88, 28, 135, 0.35);
         }
 
         .note-name {
@@ -962,7 +1021,7 @@
         /* Audio Player */
         .audio-wrapper {
             display: none;
-            background: rgba(11, 17, 32, 0.82);
+            background: rgba(9, 15, 29, 0.86);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 14px;
@@ -1025,9 +1084,9 @@
         }
 
         .btn-download:hover {
-            border-color: var(--primary);
+            border-color: var(--cyan);
             color: #ffffff;
-            background-color: rgba(99, 102, 241, 0.14);
+            background-color: rgba(6, 182, 212, 0.16);
             transform: translateY(-2px);
         }
 
@@ -1035,7 +1094,7 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(3, 7, 18, 0.88);
+            background: rgba(3, 7, 18, 0.9);
             backdrop-filter: blur(10px);
             z-index: 1000;
             display: none;
@@ -1063,7 +1122,7 @@
             border: 1px solid var(--border-color);
             border-radius: 16px;
             overflow: hidden;
-            background: #0b1120;
+            background: #090f1d;
             position: relative;
         }
 
@@ -1076,7 +1135,7 @@
             padding: 11px 16px;
             border-radius: 12px;
             background: rgba(15, 23, 42, 0.96);
-            border: 1px solid rgba(34, 211, 238, 0.45);
+            border: 1px solid rgba(34, 211, 238, 0.5);
             color: #f8fafc;
             font-size: 0.84rem;
             font-weight: 600;
@@ -1095,21 +1154,21 @@
             transform: translateY(0);
         }
 
-        @media (max-width: 980px) {
+        @media (max-width: 1080px) {
             .main-wrapper {
                 grid-template-columns: 1fr;
             }
             .preview-box {
-                height: 400px;
+                height: 440px;
             }
         }
 
         @media (max-width: 600px) {
-            .rack-controls, .editor-actions, .form-row {
+            .rack-controls, .editor-actions {
                 grid-template-columns: 1fr;
             }
             .piano-keys {
-                gap: 3px;
+                gap: 4px;
             }
         }
     </style>
@@ -1185,16 +1244,22 @@
                     <div class="rack-item">
                         <label for="quick-tempo">Tempo (20 - 300 BPM)</label>
                         <div class="rack-inline">
-                            <input type="number" id="quick-tempo" min="20" max="300" value="120" style="width: 92px;">
+                            <input type="number" id="quick-tempo" min="20" max="300" value="120" style="width: 96px;">
                             <button type="button" class="btn-mini" onclick="insertarTempo()">+ Insertar</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="piano-header">
-                    <span class="piano-title"><i class="fa-solid fa-keyboard"></i> Teclado rápido (# sostenidos y b bemoles)</span>
-                    <div class="octave-bar" id="octave-bar"></div>
+                    <span class="piano-title"><i class="fa-solid fa-keyboard"></i> Teclado rápido</span>
+                    <div class="legend-pills">
+                        <span class="legend-natural">Natural</span>
+                        <span class="legend-flat">Bemol (b)</span>
+                        <span class="legend-sharp">Sostenido (#)</span>
+                    </div>
                 </div>
+
+                <div class="octave-bar" id="octave-bar"></div>
                 <div class="piano-keys" id="piano-keys"></div>
             </div>
 
@@ -1205,7 +1270,7 @@
                         <i class="fa-regular fa-copy"></i> Copiar
                     </button>
                 </div>
-                <textarea id="codigo" placeholder="Escribe notas (ej. C4 C#4 Db4 Bb3) o un programa completo con Main |: ... :|" oninput="actualizarMetaEditor()"></textarea>
+                <textarea id="codigo" placeholder="Escribe notas (ej. C4 C#4 Db4 Bb3) o instrucciones (ej. instrumento &quot;violin&quot;, tempo 110)" oninput="actualizarMetaEditor()"></textarea>
                 <div class="editor-meta">
                     <span id="editor-stats">0 líneas · 0 caracteres</span>
                     <span>Teclas válidas: A0 a C8</span>
@@ -1303,7 +1368,7 @@
             <div class="preview-box" id="preview-box">
                 <div class="placeholder-text">
                     <i class="fa-solid fa-file-audio"></i>
-                    <p>Aquí aparecerá la partitura interactiva, el desglose de compases y el reproductor de audio cuando compiles tu música.</p>
+                    <p>Aquí aparecerá la partitura como imagen adaptable, el desglose de compases y el reproductor de audio cuando compiles tu música.</p>
                 </div>
             </div>
 
@@ -1323,7 +1388,7 @@
                         <i class="fa-solid fa-file-code" style="color: #22d3ee;"></i> .bzl
                     </button>
                     <a id="dl-ly" class="btn-download" download target="_blank">
-                        <i class="fa-solid fa-feather-pointed" style="color: #a855f7;"></i> .ly
+                        <i class="fa-solid fa-feather-pointed" style="color: #c084fc;"></i> .ly
                     </a>
                     <a id="dl-pdf" class="btn-download" download target="_blank">
                         <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> PDF
@@ -1445,7 +1510,7 @@
 
                 const btnFlat = document.createElement('button');
                 btnFlat.type = 'button';
-                btnFlat.className = 'key-black';
+                btnFlat.className = 'key-flat';
                 if (t.flat && notaExisteEnOctava(t.flat, octavaActiva)) {
                     const tok = `${t.flat}${octavaActiva}`;
                     btnFlat.textContent = tok;
@@ -1457,7 +1522,7 @@
 
                 const btnSharp = document.createElement('button');
                 btnSharp.type = 'button';
-                btnSharp.className = 'key-black';
+                btnSharp.className = 'key-sharp';
                 if (t.sharp && notaExisteEnOctava(t.sharp, octavaActiva)) {
                     const tok = `${t.sharp}${octavaActiva}`;
                     btnSharp.textContent = tok;
@@ -1476,10 +1541,7 @@
                 const tokNat = `${t.nota}${octavaActiva}`;
                 btnNat.textContent = tokNat;
                 btnNat.disabled = !notaExisteEnOctava(t.nota, octavaActiva);
-                if (btnNat.disabled) {
-                    btnNat.style.opacity = '0.25';
-                    btnNat.style.cursor = 'not-allowed';
-                } else {
+                if (!btnNat.disabled) {
                     btnNat.onclick = () => insertarEnEditor(tokNat + ' ');
                 }
 
@@ -1558,11 +1620,24 @@ Main |:
         }
 
         function construirCodigoBzlActual() {
-            const crudo = document.getElementById('codigo').value;
-            if (!crudo.includes('|:')) {
-                return `Main |:\n    (:) { ${crudo.trim()} }\n:|`;
+            const crudo = document.getElementById('codigo').value.trim();
+            if (!crudo) return '';
+            if (crudo.includes('|:')) {
+                return crudo;
             }
-            return crudo;
+            const tieneInstruccion = /(^\s*(?:instrumento|tempo)\b|<-|<<|8<|<w>|\(\s*:\s*\)|\b[A-Z][A-Za-z0-9_]*\s*\()/m.test(crudo);
+            if (tieneInstruccion) {
+                const cuerpo = crudo.split(/\r?\n/).map(l => {
+                    const t = l.trim();
+                    if (!t) return '';
+                    if (/^(?:instrumento|tempo)\b/.test(t) || t.includes('<-') || t.includes('<<') || t.includes('8<') || t.includes('<w>') || t.startsWith('#') || /^\(\s*:\s*\)/.test(t) || /^[A-Z][A-Za-z0-9_]*\s*\(/.test(t)) {
+                        return `    ${t}`;
+                    }
+                    return `    (:) { ${t} }`;
+                }).filter(Boolean).join('\n');
+                return `Main |:\n${cuerpo}\n:|`;
+            }
+            return `Main |:\n    (:) { ${crudo} }\n:|`;
         }
 
         function descargarBzlActual() {
@@ -1647,7 +1722,7 @@ Main |:
                     progressStatus.textContent = 'Validando notas, instrumento y tempo...';
                 } else if (percent < 70) {
                     percent += 4;
-                    progressStatus.textContent = 'Generando partitura LilyPond y PDF...';
+                    progressStatus.textContent = 'Generando partitura LilyPond y PNG...';
                 } else if (percent < 92) {
                     percent += 2;
                     progressStatus.textContent = 'Sintetizando MIDI, WAV y MP3...';
@@ -1724,12 +1799,7 @@ Main |:
         }
 
         function ajustarAlAncho() {
-            const cont = estadoVisor.modalAbierto
-                ? document.getElementById('modal-body')
-                : document.getElementById('preview-box');
-            const ancho = Math.max(300, cont.clientWidth - 48);
-            const zoom = Math.min(2.6, Math.max(0.55, Number((ancho / 660).toFixed(2))));
-            estadoVisor.zoom = zoom;
+            estadoVisor.zoom = 1;
             estadoVisor.panX = 0;
             estadoVisor.panY = 0;
             aplicarTransformacion();
@@ -1838,7 +1908,7 @@ Main |:
                                 <img class="sheet-image" src="${src}&t=${Date.now()}" alt="Partitura LilyPond">
                             </div>
                         </div>
-                        <span class="viewer-hint">Arrastra para mover · Rueda del ratón para zoom</span>
+                        <span class="viewer-hint">Imagen adaptable · Arrastra para mover · Rueda para zoom</span>
                     `;
                     conectarPanZoom(document.getElementById('sheet-viewport-active'), 'sheet-stage-active');
                     aplicarTransformacion();
@@ -1855,7 +1925,7 @@ Main |:
                     previewBox.innerHTML = `
                         <div class="placeholder-text">
                             <i class="fa-solid fa-file-audio"></i>
-                            <p>Aquí aparecerá la partitura interactiva, el desglose de compases y el reproductor de audio cuando compiles tu música.</p>
+                            <p>Aquí aparecerá la partitura como imagen adaptable, el desglose de compases y el reproductor de audio cuando compiles tu música.</p>
                         </div>
                     `;
                 }
@@ -1900,9 +1970,9 @@ Main |:
                 previewBox.innerHTML = `
                     <div class="notes-inspector">
                         <div class="inspector-summary">
-                            <span class="stat-chip"><i class="fa-solid fa-music"></i> ${notas.length} notas</span>
-                            <span class="stat-chip"><i class="fa-solid fa-hashtag"></i> ${alteradas} alteradas (# / b)</span>
-                            <span class="stat-chip"><i class="fa-solid fa-layer-group"></i> ${compases.length} compases</span>
+                            <span class="stat-chip"><i class="fa-solid fa-music" style="color: var(--emerald);"></i> ${notas.length} notas</span>
+                            <span class="stat-chip"><i class="fa-solid fa-hashtag" style="color: var(--amber);"></i> ${alteradas} alteradas (# / b)</span>
+                            <span class="stat-chip"><i class="fa-solid fa-layer-group" style="color: var(--cyan);"></i> ${compases.length} compases</span>
                         </div>
                         <div class="measures-grid">${cardsHtml}</div>
                     </div>
@@ -1946,6 +2016,9 @@ Main |:
                 panY: estadoVisor.panY,
             };
             estadoVisor.modalAbierto = true;
+            estadoVisor.zoom = 1;
+            estadoVisor.panX = 0;
+            estadoVisor.panY = 0;
 
             if (hayPaginas) {
                 const src = estadoVisor.paginasPng[estadoVisor.paginaActual];
@@ -1955,15 +2028,15 @@ Main |:
                             <img class="sheet-image" src="${src}&t=${Date.now()}" alt="Partitura ampliada">
                         </div>
                     </div>
-                    <span class="viewer-hint">Arrastra para mover · Rueda del ratón para zoom · Esc para cerrar</span>
+                    <span class="viewer-hint">Imagen adaptable · Arrastra para mover · Rueda para zoom · Esc para cerrar</span>
                 `;
                 conectarPanZoom(document.getElementById('sheet-viewport-modal'), 'sheet-stage-modal');
+                aplicarTransformacion();
             } else {
                 body.innerHTML = `<iframe src="${estadoVisor.rutaPdf}#view=FitH" class="pdf-viewer"></iframe>`;
             }
 
             modal.classList.add('open');
-            setTimeout(ajustarAlAncho, 30);
         }
 
         function cerrarModalPartitura() {
@@ -2048,9 +2121,11 @@ Main |:
                 estadoVisor.notasDetalle = res.notas_detalle || [];
                 estadoVisor.paginaActual = 0;
                 estadoVisor.modoPdfNativo = false;
+                estadoVisor.zoom = 1;
+                estadoVisor.panX = 0;
+                estadoVisor.panY = 0;
 
                 renderizarVisor();
-                setTimeout(ajustarAlAncho, 40);
 
                 if (res.ruta_mp3) {
                     audioPlayer.src = `${res.ruta_mp3}&t=${Date.now()}`;
@@ -2058,7 +2133,7 @@ Main |:
                     const badges = document.getElementById('audio-badges');
                     const primerNota = estadoVisor.notasDetalle[0];
                     badges.innerHTML = primerNota
-                        ? `<span class="stat-chip"><i class="fa-solid fa-guitar"></i> ${primerNota.instrumento}</span><span class="stat-chip"><i class="fa-solid fa-gauge-high"></i> ${primerNota.tempo} BPM</span>`
+                        ? `<span class="stat-chip"><i class="fa-solid fa-guitar" style="color: var(--violet);"></i> ${primerNota.instrumento}</span><span class="stat-chip"><i class="fa-solid fa-gauge-high" style="color: var(--amber);"></i> ${primerNota.tempo} BPM</span>`
                         : '';
                 } else {
                     audioWrapper.style.display = 'none';
