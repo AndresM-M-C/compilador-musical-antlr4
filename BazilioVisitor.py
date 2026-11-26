@@ -44,6 +44,16 @@ class BazilioVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BazilioParser#Instrumento.
+    def visitInstrumento(self, ctx:BazilioParser.InstrumentoContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BazilioParser#Tempo.
+    def visitTempo(self, ctx:BazilioParser.TempoContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BazilioParser#Invocacion.
     def visitInvocacion(self, ctx:BazilioParser.InvocacionContext):
         return self.visitChildren(ctx)

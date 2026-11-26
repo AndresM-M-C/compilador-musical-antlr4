@@ -10,6 +10,8 @@ instruccion
     | LEE VAR                               # Lectura
     | ESCRIBE (TEXTO | expr)*               # Escritura
     | TOCA expr                             # Reproduccion
+    | INSTRUMENTO (TEXTO | expr)            # Instrumento
+    | TEMPO expr                            # Tempo
     | PROC_ID expr*                         # Invocacion
     | SI expr bloque (SINO bloque)?         # Condicional
     | MIENTRAS expr bloque                  # Iteracion
@@ -52,13 +54,15 @@ MAS : '+' ;  MENOS : '-' ;  POR : '*' ;  ENTRE : '/' ;  MODULO : '%' ;
 IGUAL : '=' ;  DISTINTO : '/=' ;
 MENOR : '<' ;  MAYOR : '>' ;  MENORIGUAL : '<=' ;  MAYORIGUAL : '>=' ;
 
-SI      : 'if' ;
-SINO    : 'else' ;
-MIENTRAS: 'while' ;
+SI          : 'if' ;
+SINO        : 'else' ;
+MIENTRAS    : 'while' ;
+INSTRUMENTO : 'instrumento' ;
+TEMPO       : 'tempo' ;
 
 TEXTO   : '"' ~["\r\n]* '"' | '\u201C' ~[\u201D\r\n]* '\u201D' ;
 ENTERO  : [0-9]+ ;
-NOTA    : [A-G] ('#' | 'b')? [0-8]? ;
+NOTA    : [A-G] [b#]? [0-8]? ;
 PROC_ID : [A-Z] [a-zA-Z0-9_]* ;
 VAR     : [a-z] [a-zA-Z0-9_]* ;
 

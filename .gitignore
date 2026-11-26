@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+programas/*.wav
+programas/*.mp3
+programas/*.pdf
+programas/*.midi

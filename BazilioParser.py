@@ -10,49 +10,52 @@ else:
 
 def serializedATN():
     return [
-        4,1,36,122,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,1,0,4,0,12,8,
+        4,1,38,129,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,1,0,4,0,12,8,
         0,11,0,12,0,13,1,0,1,0,1,1,1,1,5,1,20,8,1,10,1,12,1,23,9,1,1,1,1,
         1,1,2,1,2,5,2,29,8,2,10,2,12,2,32,9,2,1,2,1,2,1,3,1,3,1,3,1,3,1,
-        3,1,3,1,3,1,3,5,3,44,8,3,10,3,12,3,47,9,3,1,3,1,3,1,3,1,3,5,3,53,
-        8,3,10,3,12,3,56,9,3,1,3,1,3,1,3,1,3,1,3,3,3,63,8,3,1,3,1,3,1,3,
-        1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,78,8,3,1,4,1,4,1,4,1,
-        4,1,4,1,4,1,4,1,4,1,4,5,4,89,8,4,10,4,12,4,92,9,4,1,4,1,4,1,4,1,
-        4,3,4,98,8,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,
-        1,4,1,4,1,4,1,4,5,4,117,8,4,10,4,12,4,120,9,4,1,4,0,1,8,5,0,2,4,
-        6,8,0,4,1,0,18,20,1,0,16,17,1,0,23,26,1,0,21,22,142,0,11,1,0,0,0,
-        2,17,1,0,0,0,4,26,1,0,0,0,6,77,1,0,0,0,8,97,1,0,0,0,10,12,3,2,1,
-        0,11,10,1,0,0,0,12,13,1,0,0,0,13,11,1,0,0,0,13,14,1,0,0,0,14,15,
-        1,0,0,0,15,16,5,0,0,1,16,1,1,0,0,0,17,21,5,33,0,0,18,20,5,34,0,0,
-        19,18,1,0,0,0,20,23,1,0,0,0,21,19,1,0,0,0,21,22,1,0,0,0,22,24,1,
-        0,0,0,23,21,1,0,0,0,24,25,3,4,2,0,25,3,1,0,0,0,26,30,5,1,0,0,27,
-        29,3,6,3,0,28,27,1,0,0,0,29,32,1,0,0,0,30,28,1,0,0,0,30,31,1,0,0,
-        0,31,33,1,0,0,0,32,30,1,0,0,0,33,34,5,2,0,0,34,5,1,0,0,0,35,36,5,
-        34,0,0,36,37,5,3,0,0,37,78,3,8,4,0,38,39,5,4,0,0,39,78,5,34,0,0,
-        40,45,5,5,0,0,41,44,5,30,0,0,42,44,3,8,4,0,43,41,1,0,0,0,43,42,1,
-        0,0,0,44,47,1,0,0,0,45,43,1,0,0,0,45,46,1,0,0,0,46,78,1,0,0,0,47,
-        45,1,0,0,0,48,49,5,6,0,0,49,78,3,8,4,0,50,54,5,33,0,0,51,53,3,8,
-        4,0,52,51,1,0,0,0,53,56,1,0,0,0,54,52,1,0,0,0,54,55,1,0,0,0,55,78,
-        1,0,0,0,56,54,1,0,0,0,57,58,5,27,0,0,58,59,3,8,4,0,59,62,3,4,2,0,
-        60,61,5,28,0,0,61,63,3,4,2,0,62,60,1,0,0,0,62,63,1,0,0,0,63,78,1,
-        0,0,0,64,65,5,29,0,0,65,66,3,8,4,0,66,67,3,4,2,0,67,78,1,0,0,0,68,
-        69,5,34,0,0,69,70,5,7,0,0,70,78,3,8,4,0,71,72,5,8,0,0,72,73,5,34,
-        0,0,73,74,5,10,0,0,74,75,3,8,4,0,75,76,5,11,0,0,76,78,1,0,0,0,77,
-        35,1,0,0,0,77,38,1,0,0,0,77,40,1,0,0,0,77,48,1,0,0,0,77,50,1,0,0,
-        0,77,57,1,0,0,0,77,64,1,0,0,0,77,68,1,0,0,0,77,71,1,0,0,0,78,7,1,
-        0,0,0,79,80,6,4,-1,0,80,81,5,9,0,0,81,98,3,8,4,10,82,83,5,12,0,0,
-        83,84,3,8,4,0,84,85,5,13,0,0,85,98,1,0,0,0,86,90,5,14,0,0,87,89,
-        3,8,4,0,88,87,1,0,0,0,89,92,1,0,0,0,90,88,1,0,0,0,90,91,1,0,0,0,
-        91,93,1,0,0,0,92,90,1,0,0,0,93,98,5,15,0,0,94,98,5,31,0,0,95,98,
-        5,32,0,0,96,98,5,34,0,0,97,79,1,0,0,0,97,82,1,0,0,0,97,86,1,0,0,
-        0,97,94,1,0,0,0,97,95,1,0,0,0,97,96,1,0,0,0,98,118,1,0,0,0,99,100,
-        10,9,0,0,100,101,7,0,0,0,101,117,3,8,4,10,102,103,10,8,0,0,103,104,
-        7,1,0,0,104,117,3,8,4,9,105,106,10,7,0,0,106,107,7,2,0,0,107,117,
-        3,8,4,8,108,109,10,6,0,0,109,110,7,3,0,0,110,117,3,8,4,7,111,112,
-        10,11,0,0,112,113,5,10,0,0,113,114,3,8,4,0,114,115,5,11,0,0,115,
-        117,1,0,0,0,116,99,1,0,0,0,116,102,1,0,0,0,116,105,1,0,0,0,116,108,
-        1,0,0,0,116,111,1,0,0,0,117,120,1,0,0,0,118,116,1,0,0,0,118,119,
-        1,0,0,0,119,9,1,0,0,0,120,118,1,0,0,0,12,13,21,30,43,45,54,62,77,
-        90,97,116,118
+        3,1,3,1,3,1,3,5,3,44,8,3,10,3,12,3,47,9,3,1,3,1,3,1,3,1,3,1,3,3,
+        3,54,8,3,1,3,1,3,1,3,1,3,5,3,60,8,3,10,3,12,3,63,9,3,1,3,1,3,1,3,
+        1,3,1,3,3,3,70,8,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,
+        3,1,3,3,3,85,8,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,5,4,96,8,4,
+        10,4,12,4,99,9,4,1,4,1,4,1,4,1,4,3,4,105,8,4,1,4,1,4,1,4,1,4,1,4,
+        1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,5,4,124,8,4,10,4,
+        12,4,127,9,4,1,4,0,1,8,5,0,2,4,6,8,0,4,1,0,18,20,1,0,16,17,1,0,23,
+        26,1,0,21,22,152,0,11,1,0,0,0,2,17,1,0,0,0,4,26,1,0,0,0,6,84,1,0,
+        0,0,8,104,1,0,0,0,10,12,3,2,1,0,11,10,1,0,0,0,12,13,1,0,0,0,13,11,
+        1,0,0,0,13,14,1,0,0,0,14,15,1,0,0,0,15,16,5,0,0,1,16,1,1,0,0,0,17,
+        21,5,35,0,0,18,20,5,36,0,0,19,18,1,0,0,0,20,23,1,0,0,0,21,19,1,0,
+        0,0,21,22,1,0,0,0,22,24,1,0,0,0,23,21,1,0,0,0,24,25,3,4,2,0,25,3,
+        1,0,0,0,26,30,5,1,0,0,27,29,3,6,3,0,28,27,1,0,0,0,29,32,1,0,0,0,
+        30,28,1,0,0,0,30,31,1,0,0,0,31,33,1,0,0,0,32,30,1,0,0,0,33,34,5,
+        2,0,0,34,5,1,0,0,0,35,36,5,36,0,0,36,37,5,3,0,0,37,85,3,8,4,0,38,
+        39,5,4,0,0,39,85,5,36,0,0,40,45,5,5,0,0,41,44,5,32,0,0,42,44,3,8,
+        4,0,43,41,1,0,0,0,43,42,1,0,0,0,44,47,1,0,0,0,45,43,1,0,0,0,45,46,
+        1,0,0,0,46,85,1,0,0,0,47,45,1,0,0,0,48,49,5,6,0,0,49,85,3,8,4,0,
+        50,53,5,30,0,0,51,54,5,32,0,0,52,54,3,8,4,0,53,51,1,0,0,0,53,52,
+        1,0,0,0,54,85,1,0,0,0,55,56,5,31,0,0,56,85,3,8,4,0,57,61,5,35,0,
+        0,58,60,3,8,4,0,59,58,1,0,0,0,60,63,1,0,0,0,61,59,1,0,0,0,61,62,
+        1,0,0,0,62,85,1,0,0,0,63,61,1,0,0,0,64,65,5,27,0,0,65,66,3,8,4,0,
+        66,69,3,4,2,0,67,68,5,28,0,0,68,70,3,4,2,0,69,67,1,0,0,0,69,70,1,
+        0,0,0,70,85,1,0,0,0,71,72,5,29,0,0,72,73,3,8,4,0,73,74,3,4,2,0,74,
+        85,1,0,0,0,75,76,5,36,0,0,76,77,5,7,0,0,77,85,3,8,4,0,78,79,5,8,
+        0,0,79,80,5,36,0,0,80,81,5,10,0,0,81,82,3,8,4,0,82,83,5,11,0,0,83,
+        85,1,0,0,0,84,35,1,0,0,0,84,38,1,0,0,0,84,40,1,0,0,0,84,48,1,0,0,
+        0,84,50,1,0,0,0,84,55,1,0,0,0,84,57,1,0,0,0,84,64,1,0,0,0,84,71,
+        1,0,0,0,84,75,1,0,0,0,84,78,1,0,0,0,85,7,1,0,0,0,86,87,6,4,-1,0,
+        87,88,5,9,0,0,88,105,3,8,4,10,89,90,5,12,0,0,90,91,3,8,4,0,91,92,
+        5,13,0,0,92,105,1,0,0,0,93,97,5,14,0,0,94,96,3,8,4,0,95,94,1,0,0,
+        0,96,99,1,0,0,0,97,95,1,0,0,0,97,98,1,0,0,0,98,100,1,0,0,0,99,97,
+        1,0,0,0,100,105,5,15,0,0,101,105,5,33,0,0,102,105,5,34,0,0,103,105,
+        5,36,0,0,104,86,1,0,0,0,104,89,1,0,0,0,104,93,1,0,0,0,104,101,1,
+        0,0,0,104,102,1,0,0,0,104,103,1,0,0,0,105,125,1,0,0,0,106,107,10,
+        9,0,0,107,108,7,0,0,0,108,124,3,8,4,10,109,110,10,8,0,0,110,111,
+        7,1,0,0,111,124,3,8,4,9,112,113,10,7,0,0,113,114,7,2,0,0,114,124,
+        3,8,4,8,115,116,10,6,0,0,116,117,7,3,0,0,117,124,3,8,4,7,118,119,
+        10,11,0,0,119,120,5,10,0,0,120,121,3,8,4,0,121,122,5,11,0,0,122,
+        124,1,0,0,0,123,106,1,0,0,0,123,109,1,0,0,0,123,112,1,0,0,0,123,
+        115,1,0,0,0,123,118,1,0,0,0,124,127,1,0,0,0,125,123,1,0,0,0,125,
+        126,1,0,0,0,126,9,1,0,0,0,127,125,1,0,0,0,13,13,21,30,43,45,53,61,
+        69,84,97,104,123,125
     ]
 
 class BazilioParser ( Parser ):
@@ -69,15 +72,16 @@ class BazilioParser ( Parser ):
                      "<INVALID>", "'<<'", "'8<'", "'#'", "'['", "']'", "'('", 
                      "')'", "'{'", "'}'", "'+'", "'-'", "'*'", "'/'", "'%'", 
                      "'='", "'/='", "'<'", "'>'", "'<='", "'>='", "'if'", 
-                     "'else'", "'while'" ]
+                     "'else'", "'while'", "'instrumento'", "'tempo'" ]
 
     symbolicNames = [ "<INVALID>", "INICIO", "FIN", "ASIGNA", "LEE", "ESCRIBE", 
                       "TOCA", "AGREGA", "CORTA", "LONG", "L_CORCHETE", "R_CORCHETE", 
                       "L_PARENTESIS", "R_PARENTESIS", "L_LLAVE", "R_LLAVE", 
                       "MAS", "MENOS", "POR", "ENTRE", "MODULO", "IGUAL", 
                       "DISTINTO", "MENOR", "MAYOR", "MENORIGUAL", "MAYORIGUAL", 
-                      "SI", "SINO", "MIENTRAS", "TEXTO", "ENTERO", "NOTA", 
-                      "PROC_ID", "VAR", "COMENTARIO", "ESPACIOS" ]
+                      "SI", "SINO", "MIENTRAS", "INSTRUMENTO", "TEMPO", 
+                      "TEXTO", "ENTERO", "NOTA", "PROC_ID", "VAR", "COMENTARIO", 
+                      "ESPACIOS" ]
 
     RULE_programa = 0
     RULE_procedimiento = 1
@@ -118,13 +122,15 @@ class BazilioParser ( Parser ):
     SI=27
     SINO=28
     MIENTRAS=29
-    TEXTO=30
-    ENTERO=31
-    NOTA=32
-    PROC_ID=33
-    VAR=34
-    COMENTARIO=35
-    ESPACIOS=36
+    INSTRUMENTO=30
+    TEMPO=31
+    TEXTO=32
+    ENTERO=33
+    NOTA=34
+    PROC_ID=35
+    VAR=36
+    COMENTARIO=37
+    ESPACIOS=38
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -188,7 +194,7 @@ class BazilioParser ( Parser ):
                 self.state = 13 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==33):
+                if not (_la==35):
                     break
 
             self.state = 15
@@ -254,7 +260,7 @@ class BazilioParser ( Parser ):
             self.state = 21
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==34:
+            while _la==36:
                 self.state = 18
                 self.match(BazilioParser.VAR)
                 self.state = 23
@@ -324,7 +330,7 @@ class BazilioParser ( Parser ):
             self.state = 30
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 26440892784) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 106971529584) != 0):
                 self.state = 27
                 self.instruccion()
                 self.state = 32
@@ -357,6 +363,35 @@ class BazilioParser ( Parser ):
         def copyFrom(self, ctx:ParserRuleContext):
             super().copyFrom(ctx)
 
+
+
+    class InstrumentoContext(InstruccionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BazilioParser.InstruccionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def INSTRUMENTO(self):
+            return self.getToken(BazilioParser.INSTRUMENTO, 0)
+        def TEXTO(self):
+            return self.getToken(BazilioParser.TEXTO, 0)
+        def expr(self):
+            return self.getTypedRuleContext(BazilioParser.ExprContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterInstrumento" ):
+                listener.enterInstrumento(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitInstrumento" ):
+                listener.exitInstrumento(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInstrumento" ):
+                return visitor.visitInstrumento(self)
+            else:
+                return visitor.visitChildren(self)
 
 
     class IteracionContext(InstruccionContext):
@@ -482,6 +517,33 @@ class BazilioParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitEscritura" ):
                 return visitor.visitEscritura(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TempoContext(InstruccionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a BazilioParser.InstruccionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def TEMPO(self):
+            return self.getToken(BazilioParser.TEMPO, 0)
+        def expr(self):
+            return self.getTypedRuleContext(BazilioParser.ExprContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTempo" ):
+                listener.enterTempo(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTempo" ):
+                listener.exitTempo(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTempo" ):
+                return visitor.visitTempo(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -640,9 +702,9 @@ class BazilioParser ( Parser ):
         self.enterRule(localctx, 6, self.RULE_instruccion)
         self._la = 0 # Token type
         try:
-            self.state = 77
+            self.state = 84
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
             if la_ == 1:
                 localctx = BazilioParser.AsignacionContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
@@ -676,11 +738,11 @@ class BazilioParser ( Parser ):
                         self.state = 43
                         self._errHandler.sync(self)
                         token = self._input.LA(1)
-                        if token in [30]:
+                        if token in [32]:
                             self.state = 41
                             self.match(BazilioParser.TEXTO)
                             pass
-                        elif token in [9, 12, 14, 31, 32, 34]:
+                        elif token in [9, 12, 14, 33, 34, 36]:
                             self.state = 42
                             self.expr(0)
                             pass
@@ -703,78 +765,108 @@ class BazilioParser ( Parser ):
                 pass
 
             elif la_ == 5:
-                localctx = BazilioParser.InvocacionContext(self, localctx)
+                localctx = BazilioParser.InstrumentoContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 50
-                self.match(BazilioParser.PROC_ID)
-                self.state = 54
+                self.match(BazilioParser.INSTRUMENTO)
+                self.state = 53
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,5,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
-                        self.state = 51
-                        self.expr(0) 
-                    self.state = 56
-                    self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,5,self._ctx)
+                token = self._input.LA(1)
+                if token in [32]:
+                    self.state = 51
+                    self.match(BazilioParser.TEXTO)
+                    pass
+                elif token in [9, 12, 14, 33, 34, 36]:
+                    self.state = 52
+                    self.expr(0)
+                    pass
+                else:
+                    raise NoViableAltException(self)
 
                 pass
 
             elif la_ == 6:
-                localctx = BazilioParser.CondicionalContext(self, localctx)
+                localctx = BazilioParser.TempoContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
-                self.state = 57
-                self.match(BazilioParser.SI)
-                self.state = 58
+                self.state = 55
+                self.match(BazilioParser.TEMPO)
+                self.state = 56
                 self.expr(0)
-                self.state = 59
+                pass
+
+            elif la_ == 7:
+                localctx = BazilioParser.InvocacionContext(self, localctx)
+                self.enterOuterAlt(localctx, 7)
+                self.state = 57
+                self.match(BazilioParser.PROC_ID)
+                self.state = 61
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
+                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                    if _alt==1:
+                        self.state = 58
+                        self.expr(0) 
+                    self.state = 63
+                    self._errHandler.sync(self)
+                    _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
+
+                pass
+
+            elif la_ == 8:
+                localctx = BazilioParser.CondicionalContext(self, localctx)
+                self.enterOuterAlt(localctx, 8)
+                self.state = 64
+                self.match(BazilioParser.SI)
+                self.state = 65
+                self.expr(0)
+                self.state = 66
                 self.bloque()
-                self.state = 62
+                self.state = 69
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==28:
-                    self.state = 60
+                    self.state = 67
                     self.match(BazilioParser.SINO)
-                    self.state = 61
+                    self.state = 68
                     self.bloque()
 
 
                 pass
 
-            elif la_ == 7:
+            elif la_ == 9:
                 localctx = BazilioParser.IteracionContext(self, localctx)
-                self.enterOuterAlt(localctx, 7)
-                self.state = 64
+                self.enterOuterAlt(localctx, 9)
+                self.state = 71
                 self.match(BazilioParser.MIENTRAS)
-                self.state = 65
+                self.state = 72
                 self.expr(0)
-                self.state = 66
+                self.state = 73
                 self.bloque()
                 pass
 
-            elif la_ == 8:
+            elif la_ == 10:
                 localctx = BazilioParser.AgregadoContext(self, localctx)
-                self.enterOuterAlt(localctx, 8)
-                self.state = 68
+                self.enterOuterAlt(localctx, 10)
+                self.state = 75
                 self.match(BazilioParser.VAR)
-                self.state = 69
+                self.state = 76
                 self.match(BazilioParser.AGREGA)
-                self.state = 70
+                self.state = 77
                 self.expr(0)
                 pass
 
-            elif la_ == 9:
+            elif la_ == 11:
                 localctx = BazilioParser.CorteContext(self, localctx)
-                self.enterOuterAlt(localctx, 9)
-                self.state = 71
+                self.enterOuterAlt(localctx, 11)
+                self.state = 78
                 self.match(BazilioParser.CORTA)
-                self.state = 72
+                self.state = 79
                 self.match(BazilioParser.VAR)
-                self.state = 73
+                self.state = 80
                 self.match(BazilioParser.L_CORCHETE)
-                self.state = 74
+                self.state = 81
                 self.expr(0)
-                self.state = 75
+                self.state = 82
                 self.match(BazilioParser.R_CORCHETE)
                 pass
 
@@ -1145,7 +1237,7 @@ class BazilioParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 97
+            self.state = 104
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [9]:
@@ -1153,85 +1245,85 @@ class BazilioParser ( Parser ):
                 self._ctx = localctx
                 _prevctx = localctx
 
-                self.state = 80
+                self.state = 87
                 self.match(BazilioParser.LONG)
-                self.state = 81
+                self.state = 88
                 self.expr(10)
                 pass
             elif token in [12]:
                 localctx = BazilioParser.ParentesisContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 82
+                self.state = 89
                 self.match(BazilioParser.L_PARENTESIS)
-                self.state = 83
+                self.state = 90
                 self.expr(0)
-                self.state = 84
+                self.state = 91
                 self.match(BazilioParser.R_PARENTESIS)
                 pass
             elif token in [14]:
                 localctx = BazilioParser.ListaContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 86
+                self.state = 93
                 self.match(BazilioParser.L_LLAVE)
-                self.state = 90
+                self.state = 97
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while (((_la) & ~0x3f) == 0 and ((1 << _la) & 23622341120) != 0):
-                    self.state = 87
+                while (((_la) & ~0x3f) == 0 and ((1 << _la) & 94489301504) != 0):
+                    self.state = 94
                     self.expr(0)
-                    self.state = 92
+                    self.state = 99
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 93
+                self.state = 100
                 self.match(BazilioParser.R_LLAVE)
                 pass
-            elif token in [31]:
+            elif token in [33]:
                 localctx = BazilioParser.EnteroContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 94
+                self.state = 101
                 self.match(BazilioParser.ENTERO)
                 pass
-            elif token in [32]:
+            elif token in [34]:
                 localctx = BazilioParser.NotaContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 95
+                self.state = 102
                 self.match(BazilioParser.NOTA)
                 pass
-            elif token in [34]:
+            elif token in [36]:
                 localctx = BazilioParser.VariableContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 96
+                self.state = 103
                 self.match(BazilioParser.VAR)
                 pass
             else:
                 raise NoViableAltException(self)
 
             self._ctx.stop = self._input.LT(-1)
-            self.state = 118
+            self.state = 125
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,11,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,12,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 116
+                    self.state = 123
                     self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
+                    la_ = self._interp.adaptivePredict(self._input,11,self._ctx)
                     if la_ == 1:
                         localctx = BazilioParser.MulDivContext(self, BazilioParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 99
+                        self.state = 106
                         if not self.precpred(self._ctx, 9):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
-                        self.state = 100
+                        self.state = 107
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 1835008) != 0)):
@@ -1239,18 +1331,18 @@ class BazilioParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 101
+                        self.state = 108
                         self.expr(10)
                         pass
 
                     elif la_ == 2:
                         localctx = BazilioParser.SumaRestaContext(self, BazilioParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 102
+                        self.state = 109
                         if not self.precpred(self._ctx, 8):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 8)")
-                        self.state = 103
+                        self.state = 110
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not(_la==16 or _la==17):
@@ -1258,18 +1350,18 @@ class BazilioParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 104
+                        self.state = 111
                         self.expr(9)
                         pass
 
                     elif la_ == 3:
                         localctx = BazilioParser.RelacionalContext(self, BazilioParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 105
+                        self.state = 112
                         if not self.precpred(self._ctx, 7):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
-                        self.state = 106
+                        self.state = 113
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 125829120) != 0)):
@@ -1277,18 +1369,18 @@ class BazilioParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 107
+                        self.state = 114
                         self.expr(8)
                         pass
 
                     elif la_ == 4:
                         localctx = BazilioParser.IgualdadContext(self, BazilioParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 108
+                        self.state = 115
                         if not self.precpred(self._ctx, 6):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 6)")
-                        self.state = 109
+                        self.state = 116
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not(_la==21 or _la==22):
@@ -1296,29 +1388,29 @@ class BazilioParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 110
+                        self.state = 117
                         self.expr(7)
                         pass
 
                     elif la_ == 5:
                         localctx = BazilioParser.IndiceContext(self, BazilioParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 111
+                        self.state = 118
                         if not self.precpred(self._ctx, 11):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
-                        self.state = 112
+                        self.state = 119
                         self.match(BazilioParser.L_CORCHETE)
-                        self.state = 113
+                        self.state = 120
                         self.expr(0)
-                        self.state = 114
+                        self.state = 121
                         self.match(BazilioParser.R_CORCHETE)
                         pass
 
              
-                self.state = 120
+                self.state = 127
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,11,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,12,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re

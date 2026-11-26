@@ -71,6 +71,24 @@ class BazilioListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BazilioParser#Instrumento.
+    def enterInstrumento(self, ctx:BazilioParser.InstrumentoContext):
+        pass
+
+    # Exit a parse tree produced by BazilioParser#Instrumento.
+    def exitInstrumento(self, ctx:BazilioParser.InstrumentoContext):
+        pass
+
+
+    # Enter a parse tree produced by BazilioParser#Tempo.
+    def enterTempo(self, ctx:BazilioParser.TempoContext):
+        pass
+
+    # Exit a parse tree produced by BazilioParser#Tempo.
+    def exitTempo(self, ctx:BazilioParser.TempoContext):
+        pass
+
+
     # Enter a parse tree produced by BazilioParser#Invocacion.
     def enterInvocacion(self, ctx:BazilioParser.InvocacionContext):
         pass
