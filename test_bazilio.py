@@ -1,14 +1,20 @@
+import json
 import os
+import shutil
 import struct
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
+import urllib.request
+from http.server import HTTPServer
 
 from antlr4 import InputStream
 
 import analizar
 import bazilio
+import server
 
 
 def _ejecutar(codigo, entrada=""):
@@ -264,6 +270,91 @@ class TestMidiYLilyPond(unittest.TestCase):
         self.assertEqual(programas[-1], 73)
         self.assertEqual(tempos, [108, 136])
         self.assertEqual(notas[-4:], [22, 58, 66, 61])
+
+
+class TestServidorWeb(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.raiz = os.path.dirname(os.path.abspath(__file__))
+        cls.carpeta_prueba = os.path.join(cls.raiz, "programas", "test_web_ui")
+
+    def tearDown(self):
+        if os.path.exists(self.carpeta_prueba):
+            shutil.rmtree(self.carpeta_prueba)
+
+    def test_sanitizar_y_extraer_notas_ly(self):
+        self.assertEqual(server.sanitizar_nombre("Mi Canción #1.bzl"), "Mi_Cancion_1")
+        self.assertEqual(server.sanitizar_nombre("   "), "MiCancion")
+        ly = '\\score {\n  {\n    \\tempo 4 = 110\n    \\set Staff.midiInstrument = #"violin"\n    cis\'4 bes4 ais,,,4\n  }\n}\n'
+        notas = server.extraer_notas_de_ly(ly)
+        self.assertEqual([n["nota"] for n in notas], ["C#4", "Bb3", "A#0"])
+        self.assertEqual([n["midi"] for n in notas], [61, 58, 22])
+        self.assertEqual(notas[0]["tempo"], 110)
+        self.assertEqual(notas[0]["instrumento"], "violin")
+
+    def test_ejecutar_exito_y_error_sin_estado_enganoso(self):
+        cwd_anterior = os.getcwd()
+        os.chdir(self.raiz)
+        httpd = HTTPServer(("127.0.0.1", 0), server.Handler)
+        puerto = httpd.server_address[1]
+        hilo = threading.Thread(target=httpd.serve_forever, daemon=True)
+        hilo.start()
+        try:
+            url_exec = f"http://127.0.0.1:{puerto}/ejecutar"
+            # 1. Compilación válida con teclas negras, instrumento y tempo
+            payload_ok = json.dumps({
+                "archivo": "test_web_ui",
+                "notas": 'Main |:\n  instrumento "violin"\n  tempo 100\n  (:) { C#4 F#4 Bb3 A#0 }\n:|',
+            }).encode("utf-8")
+            req = urllib.request.Request(
+                url_exec,
+                data=payload_ok,
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with urllib.request.urlopen(req) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+
+            self.assertTrue(data["exito"])
+            self.assertIsNone(data["error"])
+            self.assertEqual(data["archivo_bzl"], "test_web_ui.bzl")
+            self.assertTrue(data["ruta_bzl"].startswith("/archivo?ruta="))
+            for key in ("ruta_ly", "ruta_pdf", "ruta_mid", "ruta_midi", "ruta_wav", "ruta_mp3"):
+                self.assertIsNotNone(data[key], key)
+            self.assertGreaterEqual(len(data["paginas_png"]), 1)
+            self.assertEqual([n["midi"] for n in data["notas_detalle"]], [61, 66, 58, 22])
+
+            # Descarga del .bzl y del PNG renderizado
+            with urllib.request.urlopen(f"http://127.0.0.1:{puerto}{data['ruta_bzl']}&download=1") as r_bzl:
+                self.assertEqual(r_bzl.status, 200)
+                self.assertIn('instrumento "violin"', r_bzl.read().decode("utf-8"))
+            with urllib.request.urlopen(f"http://127.0.0.1:{puerto}{data['paginas_png'][0]}") as r_png:
+                self.assertEqual(r_png.status, 200)
+                self.assertTrue(r_png.read(8).startswith(b"\x89PNG"))
+
+            # 2. Compilación inválida con E#4 usando el mismo título: debe fallar y limpiar artefactos previos
+            payload_err = json.dumps({
+                "archivo": "test_web_ui",
+                "notas": "C4 E#4 D4",
+            }).encode("utf-8")
+            req_err = urllib.request.Request(
+                url_exec,
+                data=payload_err,
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with urllib.request.urlopen(req_err) as resp_err:
+                data_err = json.loads(resp_err.read().decode("utf-8"))
+
+            self.assertFalse(data_err["exito"])
+            self.assertIn("no existe en el piano", data_err["error"])
+            self.assertIsNone(data_err["ruta_pdf"])
+            self.assertIsNone(data_err["ruta_mp3"])
+            self.assertEqual(data_err["paginas_png"], [])
+        finally:
+            httpd.shutdown()
+            httpd.server_close()
+            os.chdir(cwd_anterior)
 
 
 if __name__ == "__main__":

@@ -3,28 +3,30 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bazilio | Compilador Musical</title>
-    <!-- Google Fonts & FontAwesome Icons -->
+    <title>Bazilio Studio | Compilador Musical</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-color: #090d16;
-            --card-bg: rgba(17, 24, 39, 0.75);
-            --card-border: rgba(255, 255, 255, 0.08);
+            --bg-color: #070b14;
+            --bg-elevated: #0d1322;
+            --card-bg: rgba(15, 23, 42, 0.82);
+            --card-border: rgba(148, 163, 184, 0.14);
             --primary: #6366f1;
             --primary-hover: #4f46e5;
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 55%, #06b6d4 100%);
             --accent: #a855f7;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --input-bg: #111827;
-            --border-color: #1f2937;
+            --cyan: #22d3ee;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --input-bg: #0b1120;
+            --border-color: rgba(148, 163, 184, 0.18);
             --terminal-bg: #030712;
             --success: #10b981;
+            --warning: #f59e0b;
             --error: #ef4444;
         }
 
@@ -32,31 +34,41 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(at 20% 20%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 80% 80%, rgba(139, 92, 246, 0.12) 0px, transparent 50%);
+            background-image:
+                radial-gradient(circle at 12% 15%, rgba(99, 102, 241, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 88% 12%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 75% 88%, rgba(168, 85, 247, 0.14) 0%, transparent 45%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px;
+            padding: 20px 20px 44px;
         }
 
-        /* Header Bar */
-        header {
+        /* Top DAW Studio Bar */
+        .topbar {
             width: 100%;
-            max-width: 1200px;
-            margin-bottom: 30px;
+            max-width: 1380px;
+            margin-bottom: 22px;
+            padding: 14px 22px;
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
+            gap: 16px;
         }
 
         .brand {
@@ -66,166 +78,502 @@
         }
 
         .brand-icon {
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             background: var(--primary-gradient);
-            border-radius: 12px;
+            border-radius: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 6px 22px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
         .brand-icon i {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             color: #ffffff;
+            transition: transform 0.6s ease;
+        }
+
+        .brand-icon.spinning i {
+            animation: spinSlow 2.4s linear infinite;
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
         .brand h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: -0.5px;
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .badge {
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: #a5b4fc;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 5px 12px;
-            border-radius: 20px;
+            background: rgba(99, 102, 241, 0.16);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            color: #c7d2fe;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 999px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
         }
 
-        /* Main Layout */
+        .brand-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #64748b;
+        }
+
+        .status-pill.is-working {
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.45);
+            background: rgba(30, 58, 138, 0.32);
+        }
+
+        .status-pill.is-working .status-dot {
+            background: #3b82f6;
+            box-shadow: 0 0 10px #3b82f6;
+            animation: pulseDot 1s ease-in-out infinite;
+        }
+
+        .status-pill.is-ok {
+            color: #6ee7b7;
+            border-color: rgba(16, 185, 129, 0.45);
+            background: rgba(6, 78, 59, 0.35);
+        }
+
+        .status-pill.is-ok .status-dot {
+            background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        .status-pill.is-error {
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.5);
+            background: rgba(127, 29, 29, 0.35);
+        }
+
+        .status-pill.is-error .status-dot {
+            background: var(--error);
+            box-shadow: 0 0 10px var(--error);
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.45); opacity: 0.55; }
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.85);
+            color: var(--text-main);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.14);
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost:active {
+            transform: translateY(0);
+        }
+
+        .btn-bzl-accent {
+            border-color: rgba(34, 211, 238, 0.35);
+            color: #a5f3fc;
+            background: rgba(8, 51, 68, 0.35);
+        }
+
+        .btn-bzl-accent:hover {
+            border-color: var(--cyan);
+            background: rgba(6, 182, 212, 0.2);
+            color: #ffffff;
+        }
+
+        /* Main Studio Grid */
         .main-wrapper {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 28px;
+            grid-template-columns: minmax(360px, 1fr) minmax(420px, 1.32fr);
+            gap: 24px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1380px;
             align-items: start;
         }
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border-radius: 20px;
             border: 1px solid var(--card-border);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            padding: 30px;
+            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.42);
+            padding: 24px;
             display: flex;
             flex-direction: column;
+            gap: 18px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .card-title {
-            font-size: 1.15rem;
-            font-weight: 600;
+            font-size: 1.08rem;
+            font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 22px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .card-title i {
             color: var(--primary);
-            font-size: 1.1rem;
         }
 
         /* Form Controls */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+
         .form-group {
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
         }
 
         label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            font-size: 0.88rem;
+            font-weight: 600;
+            font-size: 0.82rem;
             color: var(--text-muted);
         }
 
-        input[type="text"], textarea {
+        .filename-chip {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.74rem;
+            padding: 3px 9px;
+            border-radius: 7px;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            color: #67e8f9;
+        }
+
+        input[type="text"], input[type="number"], select, textarea {
             width: 100%;
-            padding: 14px 16px;
+            padding: 11px 14px;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 0.95rem;
+            border-radius: 11px;
+            font-size: 0.9rem;
             background-color: var(--input-bg);
             color: var(--text-main);
-            transition: all 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
             outline: none;
         }
 
-        input[type="text"]:focus, textarea:focus {
+        input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
         textarea {
             resize: vertical;
-            min-height: 140px;
+            min-height: 170px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             line-height: 1.6;
         }
 
-        /* Submit Button */
+        /* Quick DAW Studio Controls */
+        .studio-rack {
+            background: rgba(11, 17, 32, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .rack-controls {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 10px;
+        }
+
+        .rack-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .rack-inline {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .btn-mini {
+            padding: 9px 11px;
+            border-radius: 9px;
+            border: 1px solid var(--border-color);
+            background: rgba(30, 41, 59, 0.7);
+            color: var(--text-main);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.16s ease;
+        }
+
+        .btn-mini:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.22);
+        }
+
+        /* Mini Interactive Piano Keyboard */
+        .piano-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .piano-title {
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .octave-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .octave-btn {
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-muted);
+            font-size: 0.73rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .octave-btn.active, .octave-btn:hover {
+            color: #ffffff;
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.28);
+        }
+
+        .piano-keys {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .key-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .key-btn {
+            padding: 8px 4px;
+            border-radius: 8px;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #0f172a;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.76rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.15s ease;
+            text-align: center;
+        }
+
+        .key-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+        }
+
+        .key-btn:active {
+            transform: translateY(1px);
+        }
+
+        .key-accidentals {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px;
+        }
+
+        .key-black {
+            padding: 5px 2px;
+            border-radius: 6px;
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            background: linear-gradient(180deg, #1e293b 0%, #090d16 100%);
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.67rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.12s ease;
+        }
+
+        .key-black:hover {
+            border-color: var(--cyan);
+            color: #67e8f9;
+            transform: translateY(-1px);
+        }
+
+        .key-black:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Editor Action Row */
+        .editor-actions {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+        }
+
         .btn-submit {
-            width: 100%;
-            padding: 15px;
+            padding: 13px 18px;
             background: var(--primary-gradient);
             color: #ffffff;
             border: none;
             border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
         }
 
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+            box-shadow: 0 10px 28px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
         }
 
         .btn-submit:disabled {
-            opacity: 0.6;
+            opacity: 0.65;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
 
-        /* Progress & Loader */
+        .editor-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Progress Bar */
         .progress-container {
-            margin-top: 22px;
             display: none;
+            background: rgba(11, 17, 32, 0.75);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 14px;
         }
 
         .progress-header {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cbd5e1;
             margin-bottom: 8px;
         }
 
         .progress-bar-bg {
             width: 100%;
             height: 8px;
-            background-color: var(--input-bg);
-            border-radius: 10px;
+            background-color: var(--terminal-bg);
+            border-radius: 999px;
             overflow: hidden;
             border: 1px solid var(--border-color);
         }
@@ -234,34 +582,177 @@
             height: 100%;
             width: 0%;
             background: var(--primary-gradient);
-            border-radius: 10px;
-            transition: width 0.4s ease;
+            background-size: 200% 100%;
+            border-radius: 999px;
+            transition: width 0.35s ease;
+            animation: shimmer 1.6s linear infinite;
         }
 
-        /* Console Log / Status Output */
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Alert Banner & Console */
+        .error-banner {
+            display: none;
+            padding: 13px 15px;
+            border-radius: 12px;
+            background: rgba(127, 29, 29, 0.42);
+            border: 1px solid rgba(239, 68, 68, 0.6);
+            color: #fecaca;
+            font-size: 0.85rem;
+            line-height: 1.45;
+            gap: 10px;
+            align-items: flex-start;
+            animation: fadeSlideIn 0.25s ease;
+        }
+
+        .error-banner.visible {
+            display: flex;
+        }
+
+        .error-banner.shake {
+            animation: shakeX 0.36s ease;
+        }
+
+        @keyframes shakeX {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-3px); }
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .console-box {
-            margin-top: 20px;
             background-color: var(--terminal-bg);
             color: #a5b4fc;
-            padding: 16px;
+            padding: 13px 15px;
             border-radius: 12px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             white-space: pre-wrap;
-            word-wrap: break-word;
-            max-height: 150px;
+            word-break: break-word;
+            max-height: 145px;
             overflow-y: auto;
             border: 1px solid var(--border-color);
             border-left: 4px solid var(--primary);
+            transition: border-color 0.25s ease, color 0.25s ease;
         }
 
-        /* Preview Panel */
-        .preview-box {
-            width: 100%;
-            height: 380px;
+        .console-box.is-error {
+            border-left-color: var(--error);
+            color: #fca5a5;
+        }
+
+        .console-box.is-ok {
+            border-left-color: var(--success);
+            color: #a7f3d0;
+        }
+
+        /* Right Panel Tabs & Interactive Viewer */
+        .tabs {
+            display: inline-flex;
+            padding: 4px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 11px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 7px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: rgba(99, 102, 241, 0.24);
+            color: #ffffff;
+            box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.4);
+        }
+
+        .viewer-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 9px 12px;
+            background: var(--input-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            background-color: var(--input-bg);
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(30, 41, 59, 0.65);
+            color: var(--text-main);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.16s ease;
+        }
+
+        .tool-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.22);
+        }
+
+        .tool-btn.active {
+            border-color: var(--cyan);
+            color: #67e8f9;
+            background: rgba(6, 182, 212, 0.18);
+        }
+
+        .tool-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .zoom-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.78rem;
+            min-width: 52px;
+            text-align: center;
+            color: #cbd5e1;
+        }
+
+        .preview-box {
+            width: 100%;
+            height: 490px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background-color: #0b1120;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -270,33 +761,230 @@
             position: relative;
         }
 
+        .sheet-viewport {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            background:
+                radial-gradient(circle at center, rgba(30, 41, 59, 0.35), rgba(7, 11, 20, 0.9));
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .sheet-viewport.is-dragging {
+            cursor: grabbing;
+        }
+
+        .sheet-stage {
+            transform-origin: center top;
+            transition: transform 0.08s ease-out;
+            padding: 18px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .sheet-viewport.is-dragging .sheet-stage {
+            transition: none;
+        }
+
+        .sheet-image {
+            display: block;
+            max-width: none;
+            width: 660px;
+            height: auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+            pointer-events: none;
+        }
+
         .pdf-viewer {
             width: 100%;
             height: 100%;
             border: none;
+            background: #ffffff;
         }
 
         .placeholder-text {
             color: var(--text-muted);
             font-size: 0.9rem;
             text-align: center;
-            padding: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .placeholder-text i {
-            font-size: 2.8rem;
-            color: #374151;
+            font-size: 2.6rem;
+            color: #334155;
+        }
+
+        .viewer-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 12px;
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-color);
+            padding: 4px 9px;
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        /* Notes & Measures Inspector */
+        .notes-inspector {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .inspector-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .stat-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border-color);
+            color: #e2e8f0;
+        }
+
+        .measures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+        }
+
+        .measure-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .measure-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .measure-notes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .note-tile {
+            border-radius: 8px;
+            padding: 7px 4px;
+            text-align: center;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .note-tile.is-sharp {
+            border-color: rgba(34, 211, 238, 0.45);
+            background: rgba(8, 51, 68, 0.45);
+        }
+
+        .note-tile.is-flat {
+            border-color: rgba(168, 85, 247, 0.5);
+            background: rgba(59, 7, 100, 0.42);
+        }
+
+        .note-name {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .note-meta {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.66rem;
+            color: var(--text-muted);
+        }
+
+        /* LilyPond Code Viewer */
+        .ly-viewer {
+            width: 100%;
+            height: 100%;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ly-pre {
+            flex: 1;
+            overflow: auto;
+            background: var(--terminal-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            color: #cbd5e1;
+            white-space: pre;
         }
 
         /* Audio Player */
         .audio-wrapper {
-            margin-top: 22px;
-            width: 100%;
             display: none;
+            background: rgba(11, 17, 32, 0.82);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px;
+            animation: fadeSlideIn 0.25s ease;
+        }
+
+        .audio-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .audio-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .audio-player {
@@ -305,84 +993,233 @@
             outline: none;
         }
 
-        /* Download Section */
+        /* Downloads Grid */
+        .downloads-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         .downloads-container {
-            margin-top: 20px;
             display: none;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+            gap: 10px;
+            animation: fadeSlideIn 0.25s ease;
         }
 
         .btn-download {
-            padding: 12px;
+            padding: 10px 10px;
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             border-radius: 10px;
             color: var(--text-main);
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.8rem;
+            font-weight: 600;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 7px;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .btn-download:hover {
             border-color: var(--primary);
             color: #ffffff;
-            background-color: rgba(99, 102, 241, 0.1);
+            background-color: rgba(99, 102, 241, 0.14);
             transform: translateY(-2px);
         }
 
-        @media (min-width: 650px) {
-            .downloads-container {
-                grid-template-columns: repeat(4, 1fr);
+        /* Fullscreen Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 7, 18, 0.88);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            padding: 18px;
+            gap: 12px;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            animation: fadeSlideIn 0.2s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .modal-body {
+            flex: 1;
+            min-height: 0;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            background: #0b1120;
+            position: relative;
+        }
+
+        /* Toast Feedback */
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            z-index: 1200;
+            padding: 11px 16px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid rgba(34, 211, 238, 0.45);
+            color: #f8fafc;
+            font-size: 0.84rem;
+            font-weight: 600;
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: all 0.25s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 980px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .preview-box {
+                height: 400px;
             }
         }
 
-        @media (max-width: 900px) {
-            .main-wrapper {
+        @media (max-width: 600px) {
+            .rack-controls, .editor-actions, .form-row {
                 grid-template-columns: 1fr;
+            }
+            .piano-keys {
+                gap: 3px;
             }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <header class="topbar">
         <div class="brand">
-            <div class="brand-icon">
+            <div class="brand-icon" id="brand-icon">
                 <i class="fa-solid fa-compact-disc"></i>
             </div>
-            <div>
-                <h1>Bazilio</h1>
+            <div class="brand-title">
+                <h1>Bazilio <span class="badge">Studio</span></h1>
+                <span class="brand-sub">Compilador Musical ANTLR4 · Piano Completo, MIDI &amp; LilyPond</span>
             </div>
-            <span class="badge">Compilador Musical</span>
+        </div>
+
+        <div class="topbar-actions">
+            <div class="status-pill" id="status-pill">
+                <span class="status-dot"></span>
+                <span id="status-text">Listo</span>
+            </div>
+            <button type="button" class="btn-ghost" onclick="cargarEjemplo()">
+                <i class="fa-solid fa-sparkles"></i> Cargar ejemplo
+            </button>
+            <button type="button" class="btn-ghost btn-bzl-accent" onclick="descargarBzlActual()">
+                <i class="fa-solid fa-file-code"></i> Descargar .bzl
+            </button>
         </div>
     </header>
 
-    <div class="main-wrapper">
+    <main class="main-wrapper">
         <!-- Editor Column -->
-        <div class="card">
-            <div class="card-title">
-                <i class="fa-solid fa-sliders"></i> Escribe tu Música
+        <section class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fa-solid fa-sliders"></i> Estudio de Composición
+                </div>
+                <span class="filename-chip" id="filename-chip">MiMelodia.bzl</span>
             </div>
 
             <div class="form-group">
-                <label for="archivo">Título de tu canción:</label>
-                <input type="text" id="archivo" placeholder="ej. MiMelodia">
+                <div class="label-row">
+                    <label for="archivo">Título de tu canción:</label>
+                    <span style="font-size: 0.74rem; color: var(--text-muted);">Atajo: Ctrl + Enter para compilar</span>
+                </div>
+                <input type="text" id="archivo" placeholder="ej. MiMelodia" oninput="actualizarNombreArchivo()">
+            </div>
+
+            <!-- Quick Studio Controls -->
+            <div class="studio-rack">
+                <div class="rack-controls">
+                    <div class="rack-item">
+                        <label for="quick-instrumento">Instrumento rápido</label>
+                        <div class="rack-inline">
+                            <select id="quick-instrumento">
+                                <option value="piano">Piano (0)</option>
+                                <option value="violin">Violín (40)</option>
+                                <option value="flauta">Flauta (73)</option>
+                                <option value="guitarra">Guitarra acústica (24)</option>
+                                <option value="chelo">Chelo (42)</option>
+                                <option value="arpa">Arpa (46)</option>
+                                <option value="trompeta">Trompeta (56)</option>
+                                <option value="saxofon">Saxofón (65)</option>
+                                <option value="clarinete">Clarinete (71)</option>
+                                <option value="organo">Órgano (19)</option>
+                                <option value="marimba">Marimba (12)</option>
+                            </select>
+                            <button type="button" class="btn-mini" onclick="insertarInstrumento()">+ Insertar</button>
+                        </div>
+                    </div>
+
+                    <div class="rack-item">
+                        <label for="quick-tempo">Tempo (20 - 300 BPM)</label>
+                        <div class="rack-inline">
+                            <input type="number" id="quick-tempo" min="20" max="300" value="120" style="width: 92px;">
+                            <button type="button" class="btn-mini" onclick="insertarTempo()">+ Insertar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="piano-header">
+                    <span class="piano-title"><i class="fa-solid fa-keyboard"></i> Teclado rápido (# sostenidos y b bemoles)</span>
+                    <div class="octave-bar" id="octave-bar"></div>
+                </div>
+                <div class="piano-keys" id="piano-keys"></div>
             </div>
 
             <div class="form-group">
-                <label for="codigo">Notas musicales:</label>
-                <textarea id="codigo" placeholder="Escribe tus notas aquí (ej. C D E G)"></textarea>
+                <div class="label-row">
+                    <label for="codigo">Código Bazilio o notas musicales:</label>
+                    <button type="button" class="btn-mini" onclick="copiarCodigo()" style="padding: 4px 9px;">
+                        <i class="fa-regular fa-copy"></i> Copiar
+                    </button>
+                </div>
+                <textarea id="codigo" placeholder="Escribe notas (ej. C4 C#4 Db4 Bb3) o un programa completo con Main |: ... :|" oninput="actualizarMetaEditor()"></textarea>
+                <div class="editor-meta">
+                    <span id="editor-stats">0 líneas · 0 caracteres</span>
+                    <span>Teclas válidas: A0 a C8</span>
+                </div>
             </div>
-            
-            <button id="btn-ejecutar" class="btn-submit" onclick="ejecutar()">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> Crear música y partitura
-            </button>
+
+            <div class="editor-actions">
+                <button id="btn-ejecutar" class="btn-submit" onclick="ejecutar()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Crear música y partitura
+                </button>
+                <button type="button" class="btn-ghost btn-bzl-accent" onclick="descargarBzlActual()" title="Descargar código Bazilio actual (.bzl)">
+                    <i class="fa-solid fa-download"></i> .bzl
+                </button>
+            </div>
 
             <!-- Progress Bar -->
             <div class="progress-container" id="progress-container">
@@ -395,158 +1232,866 @@
                 </div>
             </div>
 
+            <!-- Visible Error Banner -->
+            <div class="error-banner" id="error-banner" role="alert">
+                <i class="fa-solid fa-triangle-exclamation" style="margin-top: 2px;"></i>
+                <div>
+                    <strong>Error de compilación o validación</strong>
+                    <div id="error-banner-msg"></div>
+                </div>
+            </div>
+
             <!-- Console Log -->
             <div class="console-box" id="salida">Listo para crear tu música...</div>
-        </div>
+        </section>
 
-        <!-- Preview Column -->
-        <div class="card">
-            <div class="card-title">
-                <i class="fa-solid fa-headphones"></i> Escucha y Visualiza
+        <!-- Preview & Audio Column -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fa-solid fa-headphones"></i> Escucha y Visualiza
+                </div>
+
+                <div class="tabs" role="tablist">
+                    <button type="button" class="tab-btn active" data-tab="partitura" onclick="cambiarTab('partitura')">
+                        <i class="fa-solid fa-music"></i> Partitura
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="notas" onclick="cambiarTab('notas')">
+                        <i class="fa-solid fa-grip"></i> Compases
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="ly" onclick="cambiarTab('ly')">
+                        <i class="fa-solid fa-code"></i> .ly
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Toolbar for Sheet -->
+            <div class="viewer-toolbar" id="viewer-toolbar">
+                <div class="toolbar-group">
+                    <button type="button" class="tool-btn" id="btn-zoom-out" onclick="ajustarZoom(-0.2)" title="Alejar">
+                        <i class="fa-solid fa-magnifying-glass-minus"></i>
+                    </button>
+                    <span class="zoom-badge" id="zoom-label">100%</span>
+                    <button type="button" class="tool-btn" id="btn-zoom-in" onclick="ajustarZoom(0.2)" title="Acercar">
+                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+                    </button>
+                    <button type="button" class="tool-btn" id="btn-zoom-fit" onclick="ajustarAlAncho()">
+                        <i class="fa-solid fa-arrows-left-right"></i> Ajustar
+                    </button>
+                    <button type="button" class="tool-btn" id="btn-zoom-100" onclick="restablecerVista(1)">
+                        100%
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button type="button" class="tool-btn" id="btn-prev-page" onclick="cambiarPagina(-1)" style="display: none;">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <span class="zoom-badge" id="page-label" style="display: none;">1 / 1</span>
+                    <button type="button" class="tool-btn" id="btn-next-page" onclick="cambiarPagina(1)" style="display: none;">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <button type="button" class="tool-btn" id="btn-toggle-pdf" onclick="alternarModoPdf()" style="display: none;">
+                        <i class="fa-regular fa-file-pdf"></i> PDF nativo
+                    </button>
+                    <button type="button" class="tool-btn" id="btn-fullscreen" onclick="abrirModalPartitura()" title="Ampliar a pantalla completa">
+                        <i class="fa-solid fa-expand"></i> Ampliar
+                    </button>
+                </div>
             </div>
 
             <div class="preview-box" id="preview-box">
                 <div class="placeholder-text">
                     <i class="fa-solid fa-file-audio"></i>
-                    <p>Aquí aparecerá la partitura y el reproductor de audio una vez que crees tu música.</p>
+                    <p>Aquí aparecerá la partitura interactiva, el desglose de compases y el reproductor de audio cuando compiles tu música.</p>
                 </div>
             </div>
 
             <!-- Audio Player -->
             <div class="audio-wrapper" id="audio-wrapper">
-                <label style="margin-bottom: 8px;">Escuchar Canción (MP3):</label>
+                <div class="audio-header">
+                    <span class="audio-title"><i class="fa-solid fa-volume-high" style="color: var(--cyan);"></i> Reproductor de Audio (MP3)</span>
+                    <div id="audio-badges" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+                </div>
                 <audio id="audio-player" class="audio-player" controls></audio>
             </div>
 
             <!-- Download Buttons -->
-            <div class="downloads-container" id="downloads-container">
-                <a id="dl-pdf" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> PDF
-                </a>
-                <a id="dl-mp3" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> MP3
-                </a>
-                <a id="dl-wav" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-file-waveform" style="color: #3b82f6;"></i> WAV
-                </a>
-                <a id="dl-midi" class="btn-download" download target="_blank">
-                    <i class="fa-solid fa-sliders" style="color: #f59e0b;"></i> MIDI
-                </a>
+            <div class="downloads-section">
+                <div class="downloads-container" id="downloads-container">
+                    <button type="button" id="dl-bzl" class="btn-download" onclick="descargarBzlActual()">
+                        <i class="fa-solid fa-file-code" style="color: #22d3ee;"></i> .bzl
+                    </button>
+                    <a id="dl-ly" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-feather-pointed" style="color: #a855f7;"></i> .ly
+                    </a>
+                    <a id="dl-pdf" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> PDF
+                    </a>
+                    <a id="dl-mid" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-sliders" style="color: #f59e0b;"></i> .mid
+                    </a>
+                    <a id="dl-midi" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-music" style="color: #fb923c;"></i> MIDI
+                    </a>
+                    <a id="dl-wav" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-file-waveform" style="color: #3b82f6;"></i> WAV
+                    </a>
+                    <a id="dl-mp3" class="btn-download" download target="_blank">
+                        <i class="fa-solid fa-file-audio" style="color: #10b981;"></i> MP3
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fullscreen Sheet Modal -->
+    <div class="modal-overlay" id="sheet-modal" role="dialog" aria-modal="true" aria-label="Partitura ampliada">
+        <div class="modal-header">
+            <div class="card-title">
+                <i class="fa-solid fa-expand"></i> Vista Ampliada de Partitura
+            </div>
+            <div class="toolbar-group">
+                <button type="button" class="tool-btn" onclick="ajustarZoom(-0.2)">
+                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                </button>
+                <span class="zoom-badge" id="modal-zoom-label">100%</span>
+                <button type="button" class="tool-btn" onclick="ajustarZoom(0.2)">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </button>
+                <button type="button" class="tool-btn" onclick="ajustarAlAncho()">
+                    <i class="fa-solid fa-arrows-left-right"></i> Ajustar
+                </button>
+                <button type="button" class="tool-btn" onclick="restablecerVista(1)">100%</button>
+                <button type="button" class="tool-btn" onclick="cerrarModalPartitura()" style="border-color: rgba(239,68,68,0.5); color: #fecaca;">
+                    <i class="fa-solid fa-xmark"></i> Cerrar (Esc)
+                </button>
             </div>
         </div>
+        <div class="modal-body" id="modal-body"></div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check" style="color: var(--cyan);"></i>
+        <span id="toast-msg">Listo</span>
     </div>
 
     <script>
-        let progressInterval;
+        let progressInterval = null;
+        let toastTimeout = null;
+        let octavaActiva = 4;
+
+        const estadoVisor = {
+            tab: 'partitura',
+            modoPdfNativo: false,
+            zoom: 1,
+            panX: 0,
+            panY: 0,
+            paginaActual: 0,
+            paginasPng: [],
+            rutaPdf: null,
+            contenidoLy: '',
+            notasDetalle: [],
+            modalAbierto: false,
+            zoomPrevioModal: null,
+            ultimaCompilacion: null,
+        };
+
+        const TECLAS_PIANO = [
+            { nota: 'C', sharp: 'C#', flat: null },
+            { nota: 'D', sharp: 'D#', flat: 'Db' },
+            { nota: 'E', sharp: null, flat: 'Eb' },
+            { nota: 'F', sharp: 'F#', flat: null },
+            { nota: 'G', sharp: 'G#', flat: 'Gb' },
+            { nota: 'A', sharp: 'A#', flat: 'Ab' },
+            { nota: 'B', sharp: null, flat: 'Bb' },
+        ];
+
+        function notaExisteEnOctava(notaBase, octava) {
+            if (!notaBase) return false;
+            if (octava === 0) {
+                return notaBase === 'A' || notaBase === 'A#' || notaBase === 'Bb' || notaBase === 'B';
+            }
+            if (octava === 8) {
+                return notaBase === 'C';
+            }
+            return true;
+        }
+
+        function renderizarPiano() {
+            const octaveBar = document.getElementById('octave-bar');
+            octaveBar.innerHTML = '';
+            for (let oct = 0; oct <= 8; oct++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'octave-btn' + (oct === octavaActiva ? ' active' : '');
+                btn.textContent = `O${oct}`;
+                btn.title = `Octava ${oct}`;
+                btn.onclick = () => {
+                    octavaActiva = oct;
+                    renderizarPiano();
+                };
+                octaveBar.appendChild(btn);
+            }
+
+            const cont = document.getElementById('piano-keys');
+            cont.innerHTML = '';
+            for (const t of TECLAS_PIANO) {
+                const group = document.createElement('div');
+                group.className = 'key-group';
+
+                const acc = document.createElement('div');
+                acc.className = 'key-accidentals';
+
+                const btnFlat = document.createElement('button');
+                btnFlat.type = 'button';
+                btnFlat.className = 'key-black';
+                if (t.flat && notaExisteEnOctava(t.flat, octavaActiva)) {
+                    const tok = `${t.flat}${octavaActiva}`;
+                    btnFlat.textContent = tok;
+                    btnFlat.onclick = () => insertarEnEditor(tok + ' ');
+                } else {
+                    btnFlat.textContent = t.flat ? `${t.flat}` : '·';
+                    btnFlat.disabled = true;
+                }
+
+                const btnSharp = document.createElement('button');
+                btnSharp.type = 'button';
+                btnSharp.className = 'key-black';
+                if (t.sharp && notaExisteEnOctava(t.sharp, octavaActiva)) {
+                    const tok = `${t.sharp}${octavaActiva}`;
+                    btnSharp.textContent = tok;
+                    btnSharp.onclick = () => insertarEnEditor(tok + ' ');
+                } else {
+                    btnSharp.textContent = t.sharp ? `${t.sharp}` : '·';
+                    btnSharp.disabled = true;
+                }
+
+                acc.appendChild(btnFlat);
+                acc.appendChild(btnSharp);
+
+                const btnNat = document.createElement('button');
+                btnNat.type = 'button';
+                btnNat.className = 'key-btn';
+                const tokNat = `${t.nota}${octavaActiva}`;
+                btnNat.textContent = tokNat;
+                btnNat.disabled = !notaExisteEnOctava(t.nota, octavaActiva);
+                if (btnNat.disabled) {
+                    btnNat.style.opacity = '0.25';
+                    btnNat.style.cursor = 'not-allowed';
+                } else {
+                    btnNat.onclick = () => insertarEnEditor(tokNat + ' ');
+                }
+
+                group.appendChild(acc);
+                group.appendChild(btnNat);
+                cont.appendChild(group);
+            }
+        }
+
+        function sanitizarTitulo(valor) {
+            let crudo = (valor || '').trim();
+            if (crudo.toLowerCase().endsWith('.bzl')) {
+                crudo = crudo.slice(0, -4);
+            }
+            const sinAcentos = crudo.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            const limpio = sinAcentos.replace(/[^A-Za-z0-9_-]+/g, '_').replace(/^[_-]+|[_-]+$/g, '');
+            return limpio || 'MiMelodia';
+        }
+
+        function actualizarNombreArchivo() {
+            const input = document.getElementById('archivo').value;
+            const nombre = sanitizarTitulo(input) + '.bzl';
+            document.getElementById('filename-chip').textContent = nombre;
+            return nombre;
+        }
+
+        function actualizarMetaEditor() {
+            const val = document.getElementById('codigo').value;
+            const lineas = val ? val.split(/\r?\n/).length : 0;
+            document.getElementById('editor-stats').textContent = `${lineas} línea${lineas === 1 ? '' : 's'} · ${val.length} caracteres`;
+        }
+
+        function insertarEnEditor(texto) {
+            const area = document.getElementById('codigo');
+            const inicio = area.selectionStart ?? area.value.length;
+            const fin = area.selectionEnd ?? area.value.length;
+            area.value = area.value.slice(0, inicio) + texto + area.value.slice(fin);
+            const nuevoPos = inicio + texto.length;
+            area.focus();
+            area.setSelectionRange(nuevoPos, nuevoPos);
+            actualizarMetaEditor();
+        }
+
+        function insertarInstrumento() {
+            const inst = document.getElementById('quick-instrumento').value;
+            const linea = `instrumento "${inst}"\n`;
+            insertarEnEditor(linea);
+            mostrarToast(`Insertado: instrumento "${inst}"`);
+        }
+
+        function insertarTempo() {
+            const input = document.getElementById('quick-tempo');
+            let bpm = parseInt(input.value, 10);
+            if (Number.isNaN(bpm)) bpm = 120;
+            const linea = `tempo ${bpm}\n`;
+            insertarEnEditor(linea);
+            mostrarToast(`Insertado: tempo ${bpm}`);
+        }
+
+        function cargarEjemplo() {
+            document.getElementById('archivo').value = 'Nocturno_Bazilio';
+            document.getElementById('codigo').value =
+`### Ejemplo con teclas negras, instrumento y cambio de tempo ###
+Main |:
+    instrumento "violin"
+    tempo 104
+    (:) { C4 D4 Eb4 F#4 G4 Ab4 Bb4 C5 }
+
+    instrumento "flauta"
+    tempo 132
+    (:) { C#5 Db5 Bb4 G#4 F#4 Eb4 C#4 C4 }
+:|`;
+            actualizarNombreArchivo();
+            actualizarMetaEditor();
+            mostrarToast('Ejemplo cargado en el editor');
+        }
+
+        function construirCodigoBzlActual() {
+            const crudo = document.getElementById('codigo').value;
+            if (!crudo.includes('|:')) {
+                return `Main |:\n    (:) { ${crudo.trim()} }\n:|`;
+            }
+            return crudo;
+        }
+
+        function descargarBzlActual() {
+            const contenidoEditor = document.getElementById('codigo').value;
+            if (!contenidoEditor.trim()) {
+                mostrarToast('Escribe código o notas antes de descargar .bzl');
+                return;
+            }
+            const nombreArchivo = actualizarNombreArchivo();
+            const codigoBzl = construirCodigoBzlActual();
+            const blob = new Blob([codigoBzl], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const enlace = document.createElement('a');
+            enlace.href = url;
+            enlace.download = nombreArchivo;
+            document.body.appendChild(enlace);
+            enlace.click();
+            document.body.removeChild(enlace);
+            URL.revokeObjectURL(url);
+            mostrarToast(`Descargado ${nombreArchivo}`);
+        }
+
+        async function copiarTexto(texto, mensaje) {
+            try {
+                await navigator.clipboard.writeText(texto);
+                mostrarToast(mensaje);
+            } catch {
+                mostrarToast('No se pudo copiar al portapapeles');
+            }
+        }
+
+        function copiarCodigo() {
+            const texto = document.getElementById('codigo').value;
+            if (!texto.trim()) {
+                mostrarToast('El editor está vacío');
+                return;
+            }
+            copiarTexto(texto, 'Código copiado al portapapeles');
+        }
+
+        function mostrarToast(mensaje) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = mensaje;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2600);
+        }
+
+        function setEstado(tipo, texto) {
+            const pill = document.getElementById('status-pill');
+            const label = document.getElementById('status-text');
+            pill.className = 'status-pill';
+            if (tipo === 'working') pill.classList.add('is-working');
+            else if (tipo === 'ok') pill.classList.add('is-ok');
+            else if (tipo === 'error') pill.classList.add('is-error');
+            label.textContent = texto;
+        }
 
         function iniciarCarga() {
             const btn = document.getElementById('btn-ejecutar');
+            const icon = document.getElementById('brand-icon');
             const progressContainer = document.getElementById('progress-container');
             const progressFill = document.getElementById('progress-fill');
             const progressStatus = document.getElementById('progress-status');
             const progressPercent = document.getElementById('progress-percent');
 
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Creando magia...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Compilando...`;
+            icon.classList.add('spinning');
+            setEstado('working', 'Compilando...');
+
             progressContainer.style.display = 'block';
-            
-            let percent = 0;
-            progressFill.style.width = '0%';
-            
+            let percent = 8;
+            progressFill.style.width = percent + '%';
+            progressPercent.textContent = percent + '%';
+            progressStatus.textContent = 'Analizando gramática Bazilio...';
+
+            clearInterval(progressInterval);
             progressInterval = setInterval(() => {
-                if (percent < 20) {
+                if (percent < 35) {
+                    percent += 6;
+                    progressStatus.textContent = 'Validando notas, instrumento y tempo...';
+                } else if (percent < 70) {
+                    percent += 4;
+                    progressStatus.textContent = 'Generando partitura LilyPond y PDF...';
+                } else if (percent < 92) {
                     percent += 2;
-                    progressStatus.textContent = "Leyendo tus notas musicales...";
-                } else if (percent < 50) {
-                    percent += 1;
-                    progressStatus.textContent = "Diseñando tu partitura en PDF...";
-                } else if (percent < 90) {
-                    percent += 1;
-                    progressStatus.textContent = "Generando audio y efectos (puede tardar un momento)...";
+                    progressStatus.textContent = 'Sintetizando MIDI, WAV y MP3...';
                 }
                 progressFill.style.width = percent + '%';
                 progressPercent.textContent = percent + '%';
-            }, 1000);
+            }, 350);
         }
 
-        function finalizarCarga(exito = true) {
+        function finalizarCarga(exito) {
             clearInterval(progressInterval);
             const btn = document.getElementById('btn-ejecutar');
+            const icon = document.getElementById('brand-icon');
             const progressFill = document.getElementById('progress-fill');
             const progressPercent = document.getElementById('progress-percent');
             const progressStatus = document.getElementById('progress-status');
 
+            icon.classList.remove('spinning');
             progressFill.style.width = '100%';
             progressPercent.textContent = '100%';
-            progressStatus.textContent = exito ? "¡Listo!" : "Hubo un detalle en el proceso";
+            progressStatus.textContent = exito ? '¡Compilación lista!' : 'Compilación detenida por error';
 
             btn.disabled = false;
             btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Crear música y partitura`;
         }
 
+        function mostrarError(mensaje) {
+            const banner = document.getElementById('error-banner');
+            const bannerMsg = document.getElementById('error-banner-msg');
+            const salida = document.getElementById('salida');
+
+            bannerMsg.textContent = mensaje;
+            banner.classList.remove('shake');
+            void banner.offsetWidth;
+            banner.classList.add('visible', 'shake');
+
+            salida.className = 'console-box is-error';
+            salida.textContent = mensaje;
+            setEstado('error', 'Error');
+        }
+
+        function limpiarError() {
+            const banner = document.getElementById('error-banner');
+            banner.classList.remove('visible', 'shake');
+        }
+
+        function urlDescarga(ruta) {
+            if (!ruta) return null;
+            return ruta.includes('?') ? `${ruta}&download=1` : `${ruta}?download=1`;
+        }
+
+        function aplicarTransformacion() {
+            const stage = document.getElementById('sheet-stage-active');
+            const modalStage = document.getElementById('sheet-stage-modal');
+            const tf = `translate(${estadoVisor.panX}px, ${estadoVisor.panY}px) scale(${estadoVisor.zoom})`;
+            if (stage) stage.style.transform = tf;
+            if (modalStage) modalStage.style.transform = tf;
+            const pct = `${Math.round(estadoVisor.zoom * 100)}%`;
+            document.getElementById('zoom-label').textContent = pct;
+            document.getElementById('modal-zoom-label').textContent = pct;
+        }
+
+        function ajustarZoom(delta) {
+            const nuevo = Math.min(3.5, Math.max(0.4, Number((estadoVisor.zoom + delta).toFixed(2))));
+            estadoVisor.zoom = nuevo;
+            aplicarTransformacion();
+        }
+
+        function restablecerVista(zoom = 1) {
+            estadoVisor.zoom = zoom;
+            estadoVisor.panX = 0;
+            estadoVisor.panY = 0;
+            aplicarTransformacion();
+        }
+
+        function ajustarAlAncho() {
+            const cont = estadoVisor.modalAbierto
+                ? document.getElementById('modal-body')
+                : document.getElementById('preview-box');
+            const ancho = Math.max(300, cont.clientWidth - 48);
+            const zoom = Math.min(2.6, Math.max(0.55, Number((ancho / 660).toFixed(2))));
+            estadoVisor.zoom = zoom;
+            estadoVisor.panX = 0;
+            estadoVisor.panY = 0;
+            aplicarTransformacion();
+        }
+
+        function cambiarPagina(delta) {
+            const total = estadoVisor.paginasPng.length;
+            if (!total) return;
+            const siguiente = Math.min(total - 1, Math.max(0, estadoVisor.paginaActual + delta));
+            if (siguiente !== estadoVisor.paginaActual) {
+                estadoVisor.paginaActual = siguiente;
+                renderizarVisor();
+            }
+        }
+
+        function alternarModoPdf() {
+            estadoVisor.modoPdfNativo = !estadoVisor.modoPdfNativo;
+            renderizarVisor();
+        }
+
+        function cambiarTab(tab) {
+            estadoVisor.tab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tab);
+            });
+            renderizarVisor();
+        }
+
+        function conectarPanZoom(viewport, stageId) {
+            if (!viewport) return;
+            let arrastrando = false;
+            let startX = 0;
+            let startY = 0;
+            let origX = 0;
+            let origY = 0;
+
+            viewport.addEventListener('pointerdown', (e) => {
+                arrastrando = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                origX = estadoVisor.panX;
+                origY = estadoVisor.panY;
+                viewport.classList.add('is-dragging');
+                viewport.setPointerCapture(e.pointerId);
+            });
+
+            viewport.addEventListener('pointermove', (e) => {
+                if (!arrastrando) return;
+                estadoVisor.panX = origX + (e.clientX - startX);
+                estadoVisor.panY = origY + (e.clientY - startY);
+                const stage = document.getElementById(stageId);
+                if (stage) {
+                    stage.style.transform = `translate(${estadoVisor.panX}px, ${estadoVisor.panY}px) scale(${estadoVisor.zoom})`;
+                }
+            });
+
+            const terminar = () => {
+                arrastrando = false;
+                viewport.classList.remove('is-dragging');
+            };
+            viewport.addEventListener('pointerup', terminar);
+            viewport.addEventListener('pointercancel', terminar);
+
+            viewport.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY < 0 ? 0.12 : -0.12;
+                ajustarZoom(delta);
+            }, { passive: false });
+        }
+
+        function renderizarVisor() {
+            const previewBox = document.getElementById('preview-box');
+            const toolbar = document.getElementById('viewer-toolbar');
+            const btnPdf = document.getElementById('btn-toggle-pdf');
+            const btnPrev = document.getElementById('btn-prev-page');
+            const btnNext = document.getElementById('btn-next-page');
+            const pageLabel = document.getElementById('page-label');
+
+            const hayPaginas = estadoVisor.paginasPng.length > 0;
+            const hayPdf = Boolean(estadoVisor.rutaPdf);
+            const enPartitura = estadoVisor.tab === 'partitura';
+
+            toolbar.style.display = enPartitura ? 'flex' : 'none';
+            btnPdf.style.display = (hayPaginas && hayPdf) ? 'inline-flex' : 'none';
+            btnPdf.classList.toggle('active', estadoVisor.modoPdfNativo);
+
+            if (hayPaginas && !estadoVisor.modoPdfNativo && estadoVisor.paginasPng.length > 1) {
+                btnPrev.style.display = 'inline-flex';
+                btnNext.style.display = 'inline-flex';
+                pageLabel.style.display = 'inline-block';
+                pageLabel.textContent = `${estadoVisor.paginaActual + 1} / ${estadoVisor.paginasPng.length}`;
+                btnPrev.disabled = estadoVisor.paginaActual === 0;
+                btnNext.disabled = estadoVisor.paginaActual >= estadoVisor.paginasPng.length - 1;
+            } else {
+                btnPrev.style.display = 'none';
+                btnNext.style.display = 'none';
+                pageLabel.style.display = 'none';
+            }
+
+            if (estadoVisor.tab === 'partitura') {
+                if (hayPaginas && !estadoVisor.modoPdfNativo) {
+                    const src = estadoVisor.paginasPng[estadoVisor.paginaActual];
+                    previewBox.innerHTML = `
+                        <div class="sheet-viewport" id="sheet-viewport-active">
+                            <div class="sheet-stage" id="sheet-stage-active">
+                                <img class="sheet-image" src="${src}&t=${Date.now()}" alt="Partitura LilyPond">
+                            </div>
+                        </div>
+                        <span class="viewer-hint">Arrastra para mover · Rueda del ratón para zoom</span>
+                    `;
+                    conectarPanZoom(document.getElementById('sheet-viewport-active'), 'sheet-stage-active');
+                    aplicarTransformacion();
+                } else if (hayPdf) {
+                    previewBox.innerHTML = `<iframe src="${estadoVisor.rutaPdf}#view=FitH" class="pdf-viewer"></iframe>`;
+                } else if (estadoVisor.ultimaCompilacion && !estadoVisor.ultimaCompilacion.exito) {
+                    previewBox.innerHTML = `
+                        <div class="placeholder-text">
+                            <i class="fa-solid fa-circle-exclamation" style="color: var(--error);"></i>
+                            <p>No se generó la partitura porque hay un error en el código Bazilio. Revisa el mensaje de error en el panel izquierdo.</p>
+                        </div>
+                    `;
+                } else {
+                    previewBox.innerHTML = `
+                        <div class="placeholder-text">
+                            <i class="fa-solid fa-file-audio"></i>
+                            <p>Aquí aparecerá la partitura interactiva, el desglose de compases y el reproductor de audio cuando compiles tu música.</p>
+                        </div>
+                    `;
+                }
+            } else if (estadoVisor.tab === 'notas') {
+                const notas = estadoVisor.notasDetalle;
+                if (!notas || notas.length === 0) {
+                    previewBox.innerHTML = `
+                        <div class="placeholder-text">
+                            <i class="fa-solid fa-grip"></i>
+                            <p>Compila una melodía para inspeccionar cada compás, alteración (# / b) y número MIDI.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                const alteradas = notas.filter(n => n.alteracion !== '').length;
+                const compases = [];
+                for (let i = 0; i < notas.length; i += 4) {
+                    compases.push(notas.slice(i, i + 4));
+                }
+                const cardsHtml = compases.map((compas, idx) => {
+                    const tiles = compas.map(n => {
+                        const cls = n.alteracion === '#' ? 'is-sharp' : (n.alteracion === 'b' ? 'is-flat' : '');
+                        return `
+                            <div class="note-tile ${cls}" title="LilyPond: ${n.lilypond} | MIDI: ${n.midi} | ${n.instrumento} @ ${n.tempo} BPM">
+                                <span class="note-name">${n.nota}</span>
+                                <span class="note-meta">${n.lilypond}</span>
+                                <span class="note-meta">MIDI ${n.midi}</span>
+                            </div>
+                        `;
+                    }).join('');
+                    return `
+                        <div class="measure-card">
+                            <div class="measure-title">
+                                <span>Compás ${idx + 1}</span>
+                                <span>${compas[0].tempo} BPM</span>
+                            </div>
+                            <div class="measure-notes">${tiles}</div>
+                        </div>
+                    `;
+                }).join('');
+
+                previewBox.innerHTML = `
+                    <div class="notes-inspector">
+                        <div class="inspector-summary">
+                            <span class="stat-chip"><i class="fa-solid fa-music"></i> ${notas.length} notas</span>
+                            <span class="stat-chip"><i class="fa-solid fa-hashtag"></i> ${alteradas} alteradas (# / b)</span>
+                            <span class="stat-chip"><i class="fa-solid fa-layer-group"></i> ${compases.length} compases</span>
+                        </div>
+                        <div class="measures-grid">${cardsHtml}</div>
+                    </div>
+                `;
+            } else if (estadoVisor.tab === 'ly') {
+                if (!estadoVisor.contenidoLy) {
+                    previewBox.innerHTML = `
+                        <div class="placeholder-text">
+                            <i class="fa-solid fa-code"></i>
+                            <p>Aquí verás el código LilyPond (.ly) generado tras compilar.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                previewBox.innerHTML = `
+                    <div class="ly-viewer">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">Archivo LilyPond generado</span>
+                            <button type="button" class="btn-mini" onclick="copiarTexto(estadoVisor.contenidoLy, 'Código LilyPond copiado')">
+                                <i class="fa-regular fa-copy"></i> Copiar .ly
+                            </button>
+                        </div>
+                        <pre class="ly-pre" id="ly-pre"></pre>
+                    </div>
+                `;
+                document.getElementById('ly-pre').textContent = estadoVisor.contenidoLy;
+            }
+        }
+
+        function abrirModalPartitura() {
+            const hayPaginas = estadoVisor.paginasPng.length > 0;
+            if (!hayPaginas && !estadoVisor.rutaPdf) {
+                mostrarToast('Primero compila una partitura para ampliarla');
+                return;
+            }
+            const modal = document.getElementById('sheet-modal');
+            const body = document.getElementById('modal-body');
+            estadoVisor.zoomPrevioModal = {
+                zoom: estadoVisor.zoom,
+                panX: estadoVisor.panX,
+                panY: estadoVisor.panY,
+            };
+            estadoVisor.modalAbierto = true;
+
+            if (hayPaginas) {
+                const src = estadoVisor.paginasPng[estadoVisor.paginaActual];
+                body.innerHTML = `
+                    <div class="sheet-viewport" id="sheet-viewport-modal">
+                        <div class="sheet-stage" id="sheet-stage-modal">
+                            <img class="sheet-image" src="${src}&t=${Date.now()}" alt="Partitura ampliada">
+                        </div>
+                    </div>
+                    <span class="viewer-hint">Arrastra para mover · Rueda del ratón para zoom · Esc para cerrar</span>
+                `;
+                conectarPanZoom(document.getElementById('sheet-viewport-modal'), 'sheet-stage-modal');
+            } else {
+                body.innerHTML = `<iframe src="${estadoVisor.rutaPdf}#view=FitH" class="pdf-viewer"></iframe>`;
+            }
+
+            modal.classList.add('open');
+            setTimeout(ajustarAlAncho, 30);
+        }
+
+        function cerrarModalPartitura() {
+            estadoVisor.modalAbierto = false;
+            document.getElementById('sheet-modal').classList.remove('open');
+            if (estadoVisor.zoomPrevioModal) {
+                estadoVisor.zoom = estadoVisor.zoomPrevioModal.zoom;
+                estadoVisor.panX = estadoVisor.zoomPrevioModal.panX;
+                estadoVisor.panY = estadoVisor.zoomPrevioModal.panY;
+                estadoVisor.zoomPrevioModal = null;
+            }
+            aplicarTransformacion();
+        }
+
+        function configurarEnlace(id, ruta) {
+            const el = document.getElementById(id);
+            if (ruta) {
+                el.href = urlDescarga(ruta);
+                el.style.display = 'flex';
+            } else {
+                el.removeAttribute('href');
+                el.style.display = 'none';
+            }
+        }
+
         async function ejecutar() {
-            let archivo = document.getElementById('archivo').value.trim() || 'MiCancion';
-            let notas = document.getElementById('codigo').value.trim();
+            const archivoInput = document.getElementById('archivo').value.trim();
+            const tituloLimpio = sanitizarTitulo(archivoInput || 'MiMelodia');
+            const notas = document.getElementById('codigo').value.trim();
             const salida = document.getElementById('salida');
 
             if (!notas) {
-                salida.textContent = "[Aviso] Por favor escribe algunas notas musicales antes de continuar.";
+                mostrarError('Por favor escribe algunas notas musicales o código Bazilio antes de continuar.');
                 return;
             }
 
+            limpiarError();
             iniciarCarga();
-            salida.textContent = "[Info] Procesando tu música en el servidor, por favor espera...";
+            salida.className = 'console-box';
+            salida.textContent = '[Info] Compilando tu música en el servidor...';
 
             try {
-                let resp = await fetch('/ejecutar', {
+                const resp = await fetch('/ejecutar', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ archivo: archivo, notas: notas })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ archivo: tituloLimpio, notas: notas }),
                 });
 
                 if (!resp.ok) {
-                    throw new Error(`Error en servidor: ${resp.status}`);
+                    throw new Error(`Error del servidor HTTP ${resp.status}`);
                 }
 
-                let res = await resp.json();
-                salida.textContent = res.resultado;
+                const res = await resp.json();
+                estadoVisor.ultimaCompilacion = res;
 
-                const previewBox = document.getElementById('preview-box');
                 const audioWrapper = document.getElementById('audio-wrapper');
                 const audioPlayer = document.getElementById('audio-player');
                 const downloadsContainer = document.getElementById('downloads-container');
 
-                if (res.ruta_pdf) {
-                    previewBox.innerHTML = `<iframe src="/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}#view=FitH&toolbar=0&navpanes=0" class="pdf-viewer"></iframe>`;
-                    document.getElementById('dl-pdf').href = `/archivo?ruta=${encodeURIComponent(res.ruta_pdf)}`;
-                } else {
-                    previewBox.innerHTML = `<div class="placeholder-text"><i class="fa-solid fa-circle-exclamation"></i><p>No se pudo mostrar la partitura.</p></div>`;
-                }
-
-                if (res.ruta_mp3) {
-                    audioPlayer.src = `/archivo?ruta=${encodeURIComponent(res.ruta_mp3)}&t=${Date.now()}`;
-                    audioWrapper.style.display = 'block';
-                    document.getElementById('dl-mp3').href = `/archivo?ruta=${encodeURIComponent(res.ruta_mp3)}`;
-                    
-                    let rutaWav = res.ruta_mp3.replace('.mp3', '.wav');
-                    document.getElementById('dl-wav').href = `/archivo?ruta=${encodeURIComponent(rutaWav)}`;
-
-                    let rutaMidi = res.ruta_mp3.replace('.mp3', '.midi');
-                    document.getElementById('dl-midi').href = `/archivo?ruta=${encodeURIComponent(rutaMidi)}`;
-                    
-                    downloadsContainer.style.display = 'grid';
-                } else {
+                if (!res.exito) {
+                    estadoVisor.paginasPng = [];
+                    estadoVisor.rutaPdf = null;
+                    estadoVisor.contenidoLy = '';
+                    estadoVisor.notasDetalle = [];
+                    audioPlayer.removeAttribute('src');
                     audioWrapper.style.display = 'none';
                     downloadsContainer.style.display = 'none';
+                    mostrarError(res.error || res.resultado || 'Error al compilar.');
+                    renderizarVisor();
+                    finalizarCarga(false);
+                    return;
                 }
 
-                finalizarCarga(true);
+                limpiarError();
+                salida.className = 'console-box is-ok';
+                salida.textContent = res.resultado;
+                setEstado('ok', 'Compilado ✓');
 
+                estadoVisor.paginasPng = res.paginas_png || [];
+                estadoVisor.rutaPdf = res.ruta_pdf || null;
+                estadoVisor.contenidoLy = res.contenido_ly || '';
+                estadoVisor.notasDetalle = res.notas_detalle || [];
+                estadoVisor.paginaActual = 0;
+                estadoVisor.modoPdfNativo = false;
+
+                renderizarVisor();
+                setTimeout(ajustarAlAncho, 40);
+
+                if (res.ruta_mp3) {
+                    audioPlayer.src = `${res.ruta_mp3}&t=${Date.now()}`;
+                    audioWrapper.style.display = 'block';
+                    const badges = document.getElementById('audio-badges');
+                    const primerNota = estadoVisor.notasDetalle[0];
+                    badges.innerHTML = primerNota
+                        ? `<span class="stat-chip"><i class="fa-solid fa-guitar"></i> ${primerNota.instrumento}</span><span class="stat-chip"><i class="fa-solid fa-gauge-high"></i> ${primerNota.tempo} BPM</span>`
+                        : '';
+                } else {
+                    audioWrapper.style.display = 'none';
+                }
+
+                configurarEnlace('dl-ly', res.ruta_ly);
+                configurarEnlace('dl-pdf', res.ruta_pdf);
+                configurarEnlace('dl-mid', res.ruta_mid);
+                configurarEnlace('dl-midi', res.ruta_midi);
+                configurarEnlace('dl-wav', res.ruta_wav);
+                configurarEnlace('dl-mp3', res.ruta_mp3);
+                downloadsContainer.style.display = 'grid';
+
+                finalizarCarga(true);
+                mostrarToast(`Compilación lista (${res.archivo_bzl})`);
             } catch (e) {
-                salida.textContent = "[Aviso de Conexión] El servidor tardó un poco más de lo habitual debido a los recursos gratuitos. Vuelve a intentarlo en un momento.";
+                mostrarError(`No se pudo completar la compilación: ${e.message}`);
                 finalizarCarga(false);
             }
         }
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                ejecutar();
+            } else if (e.key === 'Escape' && estadoVisor.modalAbierto) {
+                cerrarModalPartitura();
+            }
+        });
+
+        renderizarPiano();
+        actualizarNombreArchivo();
+        actualizarMetaEditor();
     </script>
 </body>
 </html>
